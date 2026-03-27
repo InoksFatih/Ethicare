@@ -8,6 +8,9 @@ A scenario-based training tool for healthcare students. Play as a doctor, naviga
 
 ```text
 ethicare/
+├─ Dockerfile                              API image when build context is repo root (Railway root-dir empty)
+├─ Dockerfile.frontend                     Next.js image when build context is repo root (set Dockerfile path)
+├─ .dockerignore
 ├─ backend/                                FastAPI API + live classroom/session backend
 │  ├─ app/
 │  │  ├─ main.py                           App entrypoint + CORS + health
@@ -236,18 +239,30 @@ Phones on **4G or another Wi‑Fi** still work as long as both URLs are **public
 
 ## Deploying on Railway (monorepo)
 
-If Railway shows **“Railpack could not determine how to build the app”** and lists only `backend/`, `frontend/`, `README.md` at the repo root, the service is building from the **wrong directory**. At the monorepo root there is no `package.json` or `requirements.txt`, so auto-detect fails.
+If Railway shows **“Railpack could not determine how to build the app”**, the service is using **Railpack** on the repo root, where there is no standalone `package.json` / `requirements.txt` (only `backend/` and `frontend/` subfolders).
 
-Do this:
+You can fix it in either of these ways.
 
-1. Create **two** services in one Railway project (e.g. `ethicare-backend`, `ethicare-frontend`).
-2. For each service, open **Settings → Root Directory**:
-   - Backend: `backend`
-   - Frontend: `frontend`
-3. Connect the **same GitHub repo** to both services.
-4. Each folder already has a **`Dockerfile`** and a **`railway.json`** that sets `"builder": "DOCKERFILE"` so Railway builds via Docker instead of guessing with Railpack at the wrong root.
-5. Generate a **public domain** for each service. Set variables (see **Production URL Variables** above), using your real `*.up.railway.app` URLs: `NEXT_PUBLIC_*` on the frontend, `CORS_ORIGINS` + `OPENAI_API_KEY` on the backend.
-6. Redeploy the frontend after changing `NEXT_PUBLIC_*`.
+### Option A — Recommended: set Root Directory per service
+
+1. Create **two** services (e.g. `ethicare-backend`, `ethicare-frontend`).
+2. **Settings → Root Directory**: `backend` for the API, `frontend` for the web app.
+3. Connect the **same GitHub repo** to both. Each folder has its own **`Dockerfile`** and optional **`railway.json`** (`builder: DOCKERFILE`).
+4. Add domains and env vars (see **Production URL Variables**).
+
+### Option B — Service root = repo root (no Root Directory)
+
+The repo root now includes:
+
+- **`Dockerfile`** — builds **FastAPI** from `backend/` (context = monorepo root).
+- **`Dockerfile.frontend`** — builds **Next.js** from `frontend/`.
+
+Use **two** services from the same repo:
+
+- **API service:** leave Root Directory empty. Railway should pick the root `Dockerfile` (backend).
+- **Web service:** in **Settings → Docker**, set **Dockerfile path** to **`Dockerfile.frontend`** (so it does not use the API Dockerfile).
+
+Add **`.dockerignore`** at the root to keep images small.
 
 Official guide: [Deploying a monorepo to Railway](https://docs.railway.com/guides/deploying-a-monorepo).
 
