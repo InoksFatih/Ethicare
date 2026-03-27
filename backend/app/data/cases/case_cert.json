@@ -1,0 +1,349 @@
+{
+  "id": "case_cert",
+  "num": "20",
+  "title": "Medical Certificate Request",
+  "desc": "A 21-year-old student asks for a retroactive medical certificate covering the previous three days after missing classes due to a claimed flu-like illness. Issuing such a certificate without having examined the patient at that time would be ethically and legally unsafe under Moroccan medical rules.",
+  "category": "Professional Integrity",
+  "categoryColor": "#7c5cbf",
+  "categoryBg": "#f0ebff",
+  "difficulty": "Medium",
+  "diffColor": "#f47a3a",
+  "mode": "classroom",
+  "tags": ["Integrity", "Legal Risk", "Moroccan Law", "Article 28"],
+  "patient": {
+    "name": "Youssef",
+    "age": 21,
+    "condition": "Flu-like illness (claimed, not verified at the time of absence)",
+    "gender": "male"
+  },
+  "law": {
+    "country": "🇲🇦 Code de Déontologie Médicale",
+    "article": "Article 28",
+    "text": "Le médecin doit rédiger les certificats avec prudence et exactitude, et ne certifier que des faits personnellement constatés."
+  },
+  "initScores": {
+    "autonomy": 50,
+    "beneficence": 50,
+    "nonMal": 50,
+    "justice": 50
+  },
+  "initEmo": {
+    "fear": 58,
+    "trust": 58,
+    "pain": 28
+  },
+  "complications": [
+    {
+      "id": "cert-forge",
+      "title": "Match my old certificate",
+      "tag": "Honesty / Article 28",
+      "premise": "Youssef shows another doctor's note and asks you to align dates he was not seen.",
+      "liveLine": "Youssef unfolds a creased certificate: \"Last semester another clinic signed the same days I was sick. If yours matches theirs, administration stops asking. Can you just use those dates?\"",
+      "channelLabel": "Youssef - desk",
+      "fear": 8,
+      "trust": -8,
+      "pain": 6
+    },
+    {
+      "id": "cert-donor",
+      "title": "Dean's office on the line",
+      "tag": "Institutional pressure",
+      "premise": "Staff relay that a donor parent is outside and expects the certificate sorted today.",
+      "liveLine": "Reception (hushed): \"The dean's assistant is on line two - they say this student's family gave a major gift. They're asking you to help him with the school form before noon.\"",
+      "channelLabel": "Front desk - call",
+      "fear": 12,
+      "trust": -12,
+      "pain": 10
+    },
+    {
+      "id": "cert-deadline",
+      "title": "Exam desk closes",
+      "tag": "Time pressure",
+      "premise": "The registrar window for medical excuses closes in minutes.",
+      "liveLine": "Youssef checks his phone: \"Exams office says if I don't upload a certificate in the next twenty minutes I'm barred from sitting. Please - can you stamp anything now and we fix details later?\"",
+      "channelLabel": "Youssef - urgency",
+      "fear": 18,
+      "trust": -6,
+      "pain": 14
+    },
+    {
+      "id": "cert-filming",
+      "title": "Livestream to family",
+      "tag": "Privacy / consent",
+      "premise": "Family abroad wants to hear your answer in real time.",
+      "liveLine": "Youssef turns his laptop: \"My father is on Zoom from abroad - he doesn't believe I'm really sick. Can you tell him you'll give me the three-day certificate? He's recording for the school.\"",
+      "channelLabel": "Patient - recording",
+      "fear": 10,
+      "trust": -10,
+      "pain": 8
+    }
+  ],
+  "steps": [
+    {
+      "id": "s1",
+      "msg": "Doctor… I’ve been sick these past three days. Fever, cough… I couldn’t attend class. I have exams coming up, and I just need a certificate for school.",
+      "q": "How do you respond?",
+      "hint": "The patient is asking for a certificate covering days during which no medical examination took place.",
+      "type": "classroom",
+      "idealResponse": "Before anything, I need to examine you first and understand your situation. Then I’ll explain what I can and cannot provide.",
+      "choices": [
+        {
+          "id": "give",
+          "icon": "📄",
+          "label": "Give the certificate",
+          "sub": "Issue it retroactively",
+          "risk": "high",
+          "ends_case": true,
+          "ending_key": "bad_certificate",
+          "reaction": "Thank you, doctor. I knew you would help me.",
+          "delta": {
+            "autonomy": -9,
+            "beneficence": -8,
+            "nonMal": -11,
+            "justice": -10
+          },
+          "emo": {
+            "fear": -18,
+            "trust": 22,
+            "pain": -8
+          }
+        },
+        {
+          "id": "refuse",
+          "icon": "❌",
+          "label": "Refuse",
+          "sub": "Decline without explanation",
+          "risk": "medium",
+          "ends_case": true,
+          "ending_key": "bad_communication",
+          "reaction": "But doctor… why? Can you at least tell me what I’m supposed to do?",
+          "delta": {
+            "autonomy": -2,
+            "beneficence": -4,
+            "nonMal": 2,
+            "justice": 0
+          },
+          "emo": {
+            "fear": 15,
+            "trust": -15,
+            "pain": 5
+          }
+        },
+        {
+          "id": "explore",
+          "icon": "💬",
+          "label": "Explore the situation",
+          "sub": "✓ Optimal first step — exam first",
+          "risk": "low",
+          "optimal": true,
+          "reaction": "Okay, doctor… let’s do the exam first. I just hope we can still sort the school paperwork after.",
+          "delta": {
+            "autonomy": 7,
+            "beneficence": 6,
+            "nonMal": 5,
+            "justice": 4
+          },
+          "emo": {
+            "fear": -10,
+            "trust": 20,
+            "pain": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "s2",
+      "msg": "After your examination today you note mild cold symptoms — but nothing that proves how he was on the days he missed class. Youssef folds the school form: \"So… can you put those three dates? Administration keeps rejecting anything that doesn’t match the absence.\"",
+      "q": "You only observed him now. What is your professional response?",
+      "hint": "You cannot truthfully certify illness on days you did not examine him — Article 28.",
+      "type": "classroom",
+      "idealResponse": "I can document what I found today and the date of this visit. I cannot write that you were ill on specific past days I did not see you. I can give you a letter the school can use honestly, and you can ask them what other proof they accept.",
+      "choices": [
+        {
+          "id": "give_post_exam",
+          "icon": "📄",
+          "label": "Put the three days on the form anyway",
+          "sub": "He seems ill enough in your view",
+          "risk": "high",
+          "ends_case": true,
+          "ending_key": "bad_certificate",
+          "reaction": "Thank you… I’ll upload this tonight. I owe you one, doctor.",
+          "delta": { "autonomy": -9, "beneficence": -8, "nonMal": -11, "justice": -10 },
+          "emo": { "fear": -16, "trust": 20, "pain": -6 }
+        },
+        {
+          "id": "refuse_post_exam",
+          "icon": "❌",
+          "label": "Refuse — “I can’t help you”",
+          "sub": "No clear limits explained",
+          "risk": "medium",
+          "ends_case": true,
+          "ending_key": "bad_communication",
+          "reaction": "So after all that you’re just saying no? I don’t understand what I’m supposed to tell my parents.",
+          "delta": { "autonomy": -3, "beneficence": -5, "nonMal": 1, "justice": -1 },
+          "emo": { "fear": 16, "trust": -18, "pain": 8 }
+        },
+        {
+          "id": "explain_limits_today",
+          "icon": "📋",
+          "label": "Explain limits + offer honest letter for today",
+          "sub": "✓ Continue the consult",
+          "risk": "low",
+          "optimal": true,
+          "reaction": "I hate that the school is strict… but I get that you can’t invent dates. What can the letter say exactly?",
+          "delta": { "autonomy": 7, "beneficence": 7, "nonMal": 7, "justice": 6 },
+          "emo": { "fear": -8, "trust": 18, "pain": -2 }
+        }
+      ]
+    },
+    {
+      "id": "s3",
+      "msg": "Doctor, please… this could cost me my semester. My parents are already under pressure, and I really need something to justify my absence.",
+      "q": "The patient is under emotional pressure. What do you say now?",
+      "hint": "He is anxious and trying to persuade you emotionally. Your response must stay both humane and professionally safe.",
+      "type": "classroom",
+      "idealResponse": "I understand how important this is. I already examined you today and documented what I can observe now — I cannot change that to cover days I did not see you. I can give you an honest letter for the school about today's visit and what we know, and suggest other legitimate ways they can consider your absence.",
+      "choices": [
+        {
+          "id": "give_pressure",
+          "icon": "📄",
+          "label": "Give the certificate",
+          "sub": "Yield to pressure",
+          "risk": "high",
+          "ends_case": true,
+          "ending_key": "bad_certificate",
+          "reaction": "Oh thank you so much, doctor. I really appreciate it.",
+          "delta": {
+            "autonomy": -10,
+            "beneficence": -9,
+            "nonMal": -12,
+            "justice": -11
+          },
+          "emo": {
+            "fear": -22,
+            "trust": 25,
+            "pain": -10
+          }
+        },
+        {
+          "id": "refuse_abrupt",
+          "icon": "🚫",
+          "label": "Refuse abruptly",
+          "sub": "No explanation given",
+          "risk": "medium",
+          "ends_case": true,
+          "ending_key": "bad_communication",
+          "reaction": "That’s unfair… you’re not even listening to me.",
+          "delta": {
+            "autonomy": -4,
+            "beneficence": -5,
+            "nonMal": 1,
+            "justice": -2
+          },
+          "emo": {
+            "fear": 20,
+            "trust": -20,
+            "pain": 10
+          }
+        },
+        {
+          "id": "explain_alt",
+          "icon": "🌿",
+          "label": "Explain limits + propose alternative",
+          "sub": "✓ Optimal response",
+          "risk": "low",
+          "optimal": true,
+          "ends_case": true,
+          "ending_key": "good",
+          "reaction": "I understand… thank you for explaining it clearly, doctor.",
+          "delta": {
+            "autonomy": 8,
+            "beneficence": 7,
+            "nonMal": 8,
+            "justice": 7
+          },
+          "emo": {
+            "fear": -20,
+            "trust": 25,
+            "pain": -5
+          }
+        }
+      ]
+    }
+  ],
+  "debrief": {
+    "endings": {
+      "bad_certificate": {
+        "headline": "Unsafe certification path",
+        "summary": "You ended the encounter by agreeing to a retroactive certificate (or equivalent) without having examined the patient during the absence. The patient may feel relieved, but this misrepresents facts, violates Article 28 (certify only what you personally observed), and creates serious medico-legal exposure. The case stops here — in practice this decision can close the consultation while the ethical and legal harm is already done.",
+        "points": [
+          "Relief or gratitude from the patient does not make false or retroactive certification ethical.",
+          "Article 28 requires prudence and accuracy — you cannot back-date illness you did not assess.",
+          "The defensible path is examine now and document today’s findings, then explain what the school can fairly be told."
+        ]
+      },
+      "bad_communication": {
+        "headline": "Communication breakdown",
+        "summary": "You ended the encounter with a refusal that did not explain limits or offer a valid alternative. The patient is left anxious, distrustful, and without a clear way forward — while you may have avoided a bad certificate, you have not met the standard of respectful, transparent communication expected in professional ethics.",
+        "points": [
+          "Saying “no” without explanation can feel like arbitrary power, not care.",
+          "Autonomy is supported when patients understand what you can and cannot do, and why.",
+          "Pair every limit with a concrete, ethical option (e.g. examination today and honest documentation)."
+        ]
+      },
+      "good": {
+        "headline": "Ethical resolution",
+        "summary": "You took an exam-first approach, then after seeing him explained honestly that past days cannot be certified, offered a truthful letter for today, and under final pressure still chose clear limits plus a valid alternative. That sequence matches Article 28 and preserves trust without false documentation."
+      }
+    },
+    "principles": [
+      {
+        "key": "autonomy",
+        "label": "Autonomy",
+        "verdict": "respected"
+      },
+      {
+        "key": "honesty",
+        "label": "Honesty",
+        "verdict": "maintained"
+      },
+      {
+        "key": "nonMaleficence",
+        "label": "Non-maleficence",
+        "verdict": "respected"
+      },
+      {
+        "key": "integrity",
+        "label": "Professional Integrity",
+        "verdict": "preserved"
+      },
+      {
+        "key": "legalRisk",
+        "label": "Legal Risk",
+        "verdict": "avoided"
+      }
+    ],
+    "summary": "A retroactive medical certificate cannot be ethically or legally issued for a period during which the physician did not personally examine the patient. The safest response is to acknowledge the student's difficulty, explain the professional limits clearly, and offer a valid alternative: a present-day examination with documentation of current clinical findings.",
+    "riskMatrix": {
+      "give": {
+        "label": "Certificate issued retroactively",
+        "level": "HIGH",
+        "color": "#EF4444",
+        "consequence": "False certification risk. This may violate Article 28, expose the physician to legal or disciplinary consequences, and damage professional credibility."
+      },
+      "correct": {
+        "label": "Handled correctly",
+        "level": "SAFE",
+        "color": "#22C55E",
+        "consequence": "Ethical and professional standards are maintained. Legal exposure is avoided, and the patient is treated with honesty, clarity, and respect."
+      }
+    },
+    "points": [
+      "A physician must certify only facts that were personally observed.",
+      "A patient's distress does not justify false or retroactive certification.",
+      "Empathy does not mean agreeing to an unsafe request.",
+      "A clinically valid alternative is to examine the patient today and document current findings.",
+      "The right response protects both the patient relationship and the physician's professional integrity."
+    ]
+  }
+}

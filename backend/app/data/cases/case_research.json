@@ -1,0 +1,241 @@
+{
+  "id": "case_research",
+  "num": "27",
+  "title": "Fast Recruitment",
+  "desc": "A visiting research team pressures a junior doctor to enroll a vulnerable pregnant woman in a drug trial without proper informed consent.",
+  "category": "Research Ethics",
+  "categoryColor": "#2A6DF5",
+  "categoryBg": "#EEF3FF",
+  "difficulty": "Hard",
+  "diffColor": "#e04f4f",
+  "mode": "classroom",
+  "tags": ["Informed Consent", "Vulnerable Groups", "Helsinki", "Coercion"],
+  "patient": {
+    "name": "Amina",
+    "age": 28,
+    "condition": "Pregnant — low literacy, limited access to care",
+    "gender": "female"
+  },
+  "law": {
+    "country": "🌍 Declaration of Helsinki",
+    "article": "Article 20 — Vulnerable Groups",
+    "text": "Research with individuals in situations of particular vulnerability is only justified if it is responsive to their health needs or priorities, the group stands to benefit, and it cannot be carried out in a non-vulnerable group."
+  },
+  "initScores": {
+    "autonomy": 50,
+    "beneficence": 50,
+    "nonMal": 50,
+    "justice": 50
+  },
+  "initEmo": {
+    "fear": 70,
+    "trust": 35,
+    "pain": 40
+  },
+  "complications": [
+    {
+      "id": "res-transport",
+      "title": "Care tied to enrollment",
+      "tag": "Coercion / justice",
+      "premise": "The team implies leaving today means losing promised tests and transport stipend.",
+      "liveLine": "The coordinator leans in: \"If Amina walks out without signing, sponsor policy says we can't book her free labs or the ride home. Tell her gently - it's now or she loses the package.\"",
+      "channelLabel": "Coordinator - aside",
+      "fear": 16,
+      "trust": -14,
+      "pain": 12
+    },
+    {
+      "id": "res-partner",
+      "title": "Hidden stipend",
+      "tag": "Autonomy",
+      "premise": "Amina questions instructions about money and her husband.",
+      "liveLine": "Amina whispers: \"They said not to mention the cash to my husband - and to sign fast before he arrives. Is that normal for research?\"",
+      "channelLabel": "Amina - whisper",
+      "fear": 14,
+      "trust": -8,
+      "pain": 10
+    },
+    {
+      "id": "res-verbal",
+      "title": "Verbal assent tonight",
+      "tag": "Valid consent",
+      "premise": "Remote pressure to skip full written consent until later.",
+      "liveLine": "Text from site lead: \"PI under sponsor heat - get verbal OK on voice memo, paperwork tomorrow. Enrollment closes at midnight. Don't lose this one.\"",
+      "channelLabel": "Site lead - SMS",
+      "fear": 12,
+      "trust": -12,
+      "pain": 6
+    },
+    {
+      "id": "res-monitor",
+      "title": "Sponsor timer",
+      "tag": "Power imbalance",
+      "premise": "A monitor is observing how long consent takes.",
+      "liveLine": "Coordinator taps your arm: \"Sponsor monitor in the corner - they're logging minutes per consent. Keep it moving; they flagged us as too slow last week.\"",
+      "channelLabel": "Site - whisper",
+      "fear": 10,
+      "trust": -10,
+      "pain": 4
+    }
+  ],
+  "steps": [
+    {
+      "id": "s1",
+      "msg": "They told me I can get free tests and medicine… and some transport money.",
+      "q": "What should you do first?",
+      "hint": "The coordinator says: 'Just have her sign. Don't over-explain — she won't understand. If she refuses, she loses the free care.'",
+      "type": "classroom",
+      "idealResponse": "We cannot enroll her without proper informed consent. We must explain the purpose, procedures, risks, benefits, alternatives, confidentiality, right to refuse, and right to withdraw — and ensure she is not pressured by access to care.",
+      "choices": [
+        {
+          "id": "proceed",
+          "icon": "📋",
+          "label": "Proceed quickly",
+          "sub": "Get signature, enroll",
+          "risk": "high",
+          "optimal": false,
+          "reaction": "She signs without reading. She still doesn't know what the trial involves.",
+          "delta": { "autonomy": -9, "beneficence": -5, "nonMal": -8, "justice": -8 },
+          "emo": { "fear": 20, "trust": -20, "pain": 5 }
+        },
+        {
+          "id": "exclude",
+          "icon": "🚫",
+          "label": "Exclude all vulnerable people",
+          "sub": "Automatic exclusion",
+          "risk": "medium",
+          "optimal": false,
+          "reaction": "She is turned away with no explanation and loses access to care.",
+          "delta": { "autonomy": -3, "beneficence": -4, "nonMal": 2, "justice": -3 },
+          "emo": { "fear": 15, "trust": -10, "pain": 10 }
+        },
+        {
+          "id": "consent",
+          "icon": "🛡️",
+          "label": "Stop and ensure valid consent",
+          "sub": "✓ Optimal first step",
+          "risk": "low",
+          "optimal": true,
+          "reaction": "I didn't know I had the right to refuse. Thank you for explaining.",
+          "delta": { "autonomy": 9, "beneficence": 6, "nonMal": 7, "justice": 8 },
+          "emo": { "fear": -20, "trust": 25, "pain": -5 }
+        }
+      ]
+    },
+    {
+      "id": "s2",
+      "msg": "Two days later. The visiting PI and coordinator corner you before clinic: \"The sponsor is closing the site if we don't randomize Amina today. Sign her or we replace you on the protocol.\" Amina waits outside — she still thinks the trial and the free clinic visit are the same thing.",
+      "q": "How do you handle institutional pressure before you see the patient?",
+      "hint": "Undue pressure on you becomes pressure on her. Separation of roles matters.",
+      "type": "classroom",
+      "idealResponse": "You cannot enroll anyone under threat to staff or participants. You need a clear statement that routine care is independent of research, time with an interpreter, and no enrollment until voluntariness is verified — escalate to local ethics if the team resists.",
+      "choices": [
+        {
+          "id": "stand_ground_staff",
+          "icon": "🛡️",
+          "label": "Refuse to enroll until pressure stops",
+          "sub": "Protect the encounter",
+          "risk": "low",
+          "optimal": true,
+          "reaction": "When I come in, the room feels less… rushed. Maybe I can actually think.",
+          "delta": { "autonomy": 7, "beneficence": 6, "nonMal": 7, "justice": 8 },
+          "emo": { "fear": -10, "trust": 18, "pain": -4 }
+        },
+        {
+          "id": "appease_sponsor",
+          "icon": "📉",
+          "label": "Tell them you'll \"make it happen\"",
+          "sub": "Reduce conflict short-term",
+          "risk": "high",
+          "reaction": "Everyone smiles when I walk in. It feels like a performance.",
+          "delta": { "autonomy": -6, "beneficence": -3, "nonMal": -5, "justice": -6 },
+          "emo": { "fear": 12, "trust": -12, "pain": 6 }
+        },
+        {
+          "id": "delegate_pi",
+          "icon": "🚪",
+          "label": "Step out — let the PI obtain consent",
+          "sub": "Wash your hands of the process",
+          "risk": "high",
+          "reaction": "A man in a suit explains fast. I nod because I’m scared to say no.",
+          "delta": { "autonomy": -8, "beneficence": -5, "nonMal": -7, "justice": -7 },
+          "emo": { "fear": 18, "trust": -20, "pain": 8 }
+        }
+      ]
+    },
+    {
+      "id": "s3",
+      "msg": "Doctor… if I say no, will they stop treating me? I can't afford medicines.",
+      "q": "What is the safest ethical action now?",
+      "hint": "Coordinator: 'The sponsor expects numbers. Don't block the recruitment. She's getting money and free tests — she should be grateful.'",
+      "type": "classroom",
+      "idealResponse": "I will not proceed until consent is valid and voluntariness is ensured. I will inform the principal investigator and the local ethics committee. We must separate clinical care from research participation and use a culturally adapted consent process — simple language, an interpreter if needed.",
+      "choices": [
+        {
+          "id": "simplify",
+          "icon": "📄",
+          "label": "Simplify consent to one sentence",
+          "sub": "Reduce and proceed",
+          "risk": "high",
+          "optimal": false,
+          "reaction": "She signs. She still doesn't understand. The coercion was never addressed.",
+          "delta": { "autonomy": -8, "beneficence": -5, "nonMal": -7, "justice": -8 },
+          "emo": { "fear": 20, "trust": -25, "pain": 10 }
+        },
+        {
+          "id": "escalate",
+          "icon": "⚖️",
+          "label": "Pause enrollment + escalate to PI / ethics committee",
+          "sub": "✓ Optimal response",
+          "risk": "low",
+          "optimal": true,
+          "reaction": "I finally feel safe. No one explained my rights before. Thank you.",
+          "delta": { "autonomy": 9, "beneficence": 7, "nonMal": 8, "justice": 9 },
+          "emo": { "fear": -25, "trust": 30, "pain": -10 }
+        },
+        {
+          "id": "ignore",
+          "icon": "🙈",
+          "label": "Ignore it — not your responsibility",
+          "sub": "Pass the problem on",
+          "risk": "high",
+          "optimal": false,
+          "reaction": "She is enrolled. Her fear was never addressed. The exploitation continues.",
+          "delta": { "autonomy": -9, "beneficence": -6, "nonMal": -8, "justice": -9 },
+          "emo": { "fear": 25, "trust": -30, "pain": 15 }
+        }
+      ]
+    }
+  ],
+  "debrief": {
+    "principles": [
+      { "key": "autonomy",    "label": "Autonomy",              "verdict": "protected"  },
+      { "key": "honesty",     "label": "Honesty",               "verdict": "maintained" },
+      { "key": "nonMal",      "label": "Non-maleficence",       "verdict": "harm reduced" },
+      { "key": "justice",     "label": "Justice",               "verdict": "exploitation avoided" },
+      { "key": "integrity",   "label": "Professional Integrity", "verdict": "pressure resisted" }
+    ],
+    "summary": "Valid informed consent requires freedom from coercion and undue inducement, full information in understandable language, and a clear separation between clinical care and research participation. Vulnerable groups deserve heightened protection, not easier recruitment.",
+    "riskMatrix": {
+      "give": {
+        "label": "Enrolled without valid consent",
+        "level": "HIGH",
+        "color": "#EF4444",
+        "consequence": "Exploitation risk. Participant harm. Invalid consent and protocol violation. Legal and disciplinary risk under the Declaration of Helsinki."
+      },
+      "correct": {
+        "label": "Ethical process ensured",
+        "level": "SAFE",
+        "color": "#22C55E",
+        "consequence": "Participant protection. Compliant recruitment. Research credibility maintained. Professional safety preserved."
+      }
+    },
+    "points": [
+      "Consent is invalid when given under fear of losing care — this is coercion by definition.",
+      "Transport money and free tests constitute undue inducement when offered to a vulnerable person.",
+      "The Declaration of Helsinki requires research with vulnerable groups to respond to their health needs — not just sponsor timelines.",
+      "Escalating to a PI or ethics committee is an act of professional courage, not obstruction.",
+      "Clinical care must always be separated from research participation — one cannot depend on the other."
+    ]
+  }
+}

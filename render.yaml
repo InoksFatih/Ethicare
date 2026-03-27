@@ -1,0 +1,31 @@
+services:
+  - type: web
+    name: ethicare-backend
+    runtime: docker
+    rootDir: backend
+    dockerfilePath: ./Dockerfile
+    autoDeploy: true
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: OPENAI_MODEL
+        value: gpt-4o-mini
+      - key: CORS_ORIGINS
+        sync: false
+
+  - type: web
+    name: ethicare-frontend
+    runtime: docker
+    rootDir: frontend
+    dockerfilePath: ./Dockerfile
+    autoDeploy: true
+    envVars:
+      - key: NEXT_PUBLIC_API_URL
+        sync: false
+      - key: NEXT_PUBLIC_WS_URL
+        sync: false
+      - key: NEXT_PUBLIC_PUBLIC_JOIN_BASE_URL
+        sync: false
