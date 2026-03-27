@@ -1148,11 +1148,12 @@ export default function LiveModeDesignerPage() {
                   </p>
                   {openaiReady === false && (
                     <p className="text-[12px] text-amber-800 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 mt-3 max-w-2xl">
-                      OpenAI is not configured on the API. Add{" "}
-                      <code className="text-[11px] bg-amber-100/80 px-1 rounded">OPENAI_API_KEY</code> to{" "}
-                      <code className="text-[11px] bg-amber-100/80 px-1 rounded">backend/.env</code> (see{" "}
-                      <code className="text-[11px] bg-amber-100/80 px-1 rounded">backend/env.example</code>
-                      ), restart FastAPI, then use <strong>GENERATE SCENARIOS</strong>.
+                      OpenAI is not configured on the API. Set{" "}
+                      <code className="text-[11px] bg-amber-100/80 px-1 rounded">OPENAI_API_KEY</code> on the backend:{" "}
+                      locally in <code className="text-[11px] bg-amber-100/80 px-1 rounded">backend/.env</code> (see{" "}
+                      <code className="text-[11px] bg-amber-100/80 px-1 rounded">backend/env.example</code>) and restart
+                      FastAPI, <strong>or</strong> in your host&apos;s environment (e.g. Railway/Render → backend service →
+                      Variables) and redeploy the API. Then use <strong>GENERATE SCENARIOS</strong>.
                     </p>
                   )}
                   {generateError && (
