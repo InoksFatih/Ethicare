@@ -60,31 +60,96 @@ function SkeletonCard() {
   )
 }
 
-type ThemeGroup = {
-  category: string
-  count: number
-  categoryColor: string
-  categoryBg: string
+/** Broad ethical domains shared by many cases (maps granular JSON `category` strings). */
+const CASE_TYPES = [
+  {
+    id: 'consent-autonomy',
+    label: 'Consent & autonomy',
+    description: 'Choosing or refusing care, capacity, honest information.',
+    color: '#0d9488',
+    bg: '#ccfbf1',
+    categories: ['Informed Consent', 'Treatment Refusal', 'Adolescent Autonomy'] as const,
+  },
+  {
+    id: 'privacy-communication',
+    label: 'Privacy & communication',
+    description: 'Confidentiality, language equity, fair dialogue.',
+    color: '#2563eb',
+    bg: '#dbeafe',
+    categories: ['Confidentiality', 'Communication & Equity'] as const,
+  },
+  {
+    id: 'safety-professionalism',
+    label: 'Safety & professionalism',
+    description: 'Errors, disclosure, integrity, and conduct.',
+    color: '#c2410c',
+    bg: '#ffedd5',
+    categories: ['Disclosure & Safety', 'Professional Conduct', 'Professional Integrity'] as const,
+  },
+  {
+    id: 'eol-donation-resources',
+    label: "Life's end, donation & scarce care",
+    description: 'Goals near death, transplantation, and triage.',
+    color: '#7c3aed',
+    bg: '#ede9fe',
+    categories: ['End of Life', 'Organ Donation', 'Resource Allocation'] as const,
+  },
+  {
+    id: 'research-population',
+    label: 'Research & wider ethics',
+    description: 'Human subjects, institutional pressure, public trust.',
+    color: '#4338ca',
+    bg: '#e0e7ff',
+    categories: ['Research Ethics'] as const,
+  },
+  {
+    id: 'other',
+    label: 'Other topics',
+    description: 'Scenarios we have not grouped yet.',
+    color: '#64748B',
+    bg: '#F1F5F9',
+    categories: [] as const,
+  },
+] as const
+
+type CaseTypeId = (typeof CASE_TYPES)[number]['id']
+
+const CATEGORY_TO_TYPE_ID: Record<string, CaseTypeId> = {}
+for (const t of CASE_TYPES) {
+  for (const cat of t.categories) {
+    CATEGORY_TO_TYPE_ID[cat] = t.id
+  }
 }
 
-function buildThemeGroups(cases: CaseSummary[]): ThemeGroup[] {
-  const map = new Map<string, { count: number; categoryColor: string; categoryBg: string }>()
+function caseTypeIdForCase(c: CaseSummary): CaseTypeId {
+  const cat = c.category?.trim() || ''
+  return CATEGORY_TO_TYPE_ID[cat] ?? 'other'
+}
+
+type CaseTypeGroup = {
+  id: CaseTypeId
+  label: string
+  description: string
+  color: string
+  bg: string
+  count: number
+}
+
+function buildCaseTypeGroups(cases: CaseSummary[]): CaseTypeGroup[] {
+  const counts = new Map<CaseTypeId, number>()
+  for (const t of CASE_TYPES) counts.set(t.id, 0)
   for (const c of cases) {
-    const key = c.category?.trim() || 'Other'
-    const cur = map.get(key)
-    if (!cur) {
-      map.set(key, {
-        count: 1,
-        categoryColor: c.categoryColor ?? '#1B6B7D',
-        categoryBg: c.categoryBg ?? '#E8F4F6',
-      })
-    } else {
-      cur.count += 1
-    }
+    const id = caseTypeIdForCase(c)
+    counts.set(id, (counts.get(id) ?? 0) + 1)
   }
-  return [...map.entries()]
-    .map(([category, v]) => ({ category, ...v }))
-    .sort((a, b) => a.category.localeCompare(b.category))
+  return CASE_TYPES.filter(t => (counts.get(t.id) ?? 0) > 0).map(t => ({
+    id: t.id,
+    label: t.label,
+    description: t.description,
+    color: t.color,
+    bg: t.bg,
+    count: counts.get(t.id) ?? 0,
+  }))
 }
 
 function CaseCard({ c }: { c: CaseSummary }) {
@@ -171,7 +236,7 @@ export default function CasesPage() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [query, setQuery] = useState('')
-  const [selectedTheme, setSelectedTheme] = useState<string | null>(null)
+  const [selectedTypeId, setSelectedTypeId] = useState<CaseTypeId | null>(null)
   const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
@@ -203,18 +268,17 @@ export default function CasesPage() {
     }
   }, [])
 
-  const themes = useMemo(() => buildThemeGroups(cases), [cases])
+  const caseTypes = useMemo(() => buildCaseTypeGroups(cases), [cases])
 
   const filtered = cases.filter(c => {
-    if (selectedTheme) {
-      const cat = c.category?.trim() || 'Other'
-      if (cat !== selectedTheme) return false
-    }
+    if (selectedTypeId && caseTypeIdForCase(c) !== selectedTypeId) return false
     if (!query) return true
     const q = query.toLowerCase()
+    const typeLabel = CASE_TYPES.find(t => t.id === caseTypeIdForCase(c))?.label ?? ''
     return (
       c.title.toLowerCase().includes(q) ||
       c.category.toLowerCase().includes(q) ||
+      typeLabel.toLowerCase().includes(q) ||
       c.desc.toLowerCase().includes(q) ||
       c.tags?.some(t => t.toLowerCase().includes(q))
     )
@@ -256,7 +320,7 @@ export default function CasesPage() {
         <div className="min-w-0 flex-1 basis-[140px]">
           <h1 className="text-white font-extrabold text-base leading-tight">Case Library</h1>
           <p className="text-white/50 text-xs">
-            {loading ? 'Loading…' : `${cases.length} cases · ${themes.length} themes`}
+            {loading ? 'Loading…' : `${cases.length} cases · ${caseTypes.length} focus areas`}
           </p>
         </div>
 
@@ -316,30 +380,31 @@ export default function CasesPage() {
         </>
       )}
 
-      <div className="max-w-2xl mx-auto px-4 py-6">
-        {!loading && !error && themes.length > 0 && (
+      <div className="max-w-4xl mx-auto px-4 py-6">
+        {!loading && !error && caseTypes.length > 0 && (
           <>
             <div className="mb-4">
               <div className="flex items-center gap-2 mb-2">
                 <LayoutGrid className="w-4 h-4 text-[#1B6B7D]" />
-                <h2 className="text-sm font-extrabold text-[#1B3A4D]">Browse by theme</h2>
+                <h2 className="text-sm font-extrabold text-[#1B3A4D]">Browse by focus area</h2>
               </div>
               <p className="text-xs text-[#5C7483] mb-3">
-                Choose a theme to show only cases in that category. Use &ldquo;All themes&rdquo; to reset.
+                Each area groups related case topics. Case cards still show the exact topic tag. Use &ldquo;All
+                cases&rdquo; to clear the filter.
               </p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
                 <button
                   type="button"
-                  onClick={() => setSelectedTheme(null)}
-                  className="text-left rounded-2xl p-4 transition-all duration-200 border-2"
+                  onClick={() => setSelectedTypeId(null)}
+                  className="text-left rounded-2xl p-4 transition-all duration-200 border-2 sm:col-span-2 lg:col-span-3"
                   style={{
-                    background: selectedTheme === null ? 'rgba(27, 107, 125, 0.12)' : 'rgba(255,255,255,0.85)',
-                    borderColor: selectedTheme === null ? '#1B6B7D' : 'rgba(27,107,125,0.12)',
-                    boxShadow: selectedTheme === null ? '0 4px 20px rgba(27,107,125,0.12)' : undefined,
+                    background: selectedTypeId === null ? 'rgba(27, 107, 125, 0.12)' : 'rgba(255,255,255,0.85)',
+                    borderColor: selectedTypeId === null ? '#1B6B7D' : 'rgba(27,107,125,0.12)',
+                    boxShadow: selectedTypeId === null ? '0 4px 20px rgba(27,107,125,0.12)' : undefined,
                   }}
                 >
                   <div className="flex items-center justify-between gap-2">
-                    <span className="font-extrabold text-sm text-[#1B3A4D]">All themes</span>
+                    <span className="font-extrabold text-sm text-[#1B3A4D]">All cases</span>
                     <span
                       className="text-xs font-bold tabular-nums px-2 py-0.5 rounded-full"
                       style={{ background: '#E8F4F6', color: '#1B6B7D' }}
@@ -347,42 +412,31 @@ export default function CasesPage() {
                       {cases.length}
                     </span>
                   </div>
-                  <p className="text-[11px] text-[#5C7483] mt-1">Every case in the library</p>
+                  <p className="text-[11px] text-[#5C7483] mt-1">Full library — no area filter</p>
                 </button>
-                {themes.map(t => (
+                {caseTypes.map(t => (
                   <button
-                    key={t.category}
+                    key={t.id}
                     type="button"
-                    onClick={() => setSelectedTheme(t.category)}
+                    onClick={() => setSelectedTypeId(t.id)}
                     className="text-left rounded-2xl p-4 transition-all duration-200 border-2"
                     style={{
-                      background:
-                        selectedTheme === t.category ? `${t.categoryBg}ee` : 'rgba(255,255,255,0.85)',
-                      borderColor:
-                        selectedTheme === t.category ? t.categoryColor : 'rgba(27,107,125,0.12)',
+                      background: selectedTypeId === t.id ? `${t.bg}f0` : 'rgba(255,255,255,0.85)',
+                      borderColor: selectedTypeId === t.id ? t.color : 'rgba(27,107,125,0.12)',
                       boxShadow:
-                        selectedTheme === t.category
-                          ? `0 4px 20px ${t.categoryColor}22`
-                          : undefined,
+                        selectedTypeId === t.id ? `0 4px 20px ${t.color}28` : undefined,
                     }}
                   >
                     <div className="flex items-center justify-between gap-2">
-                      <span
-                        className="font-extrabold text-sm leading-snug"
-                        style={{ color: t.categoryColor }}
-                      >
-                        {t.category}
-                      </span>
+                      <span className="font-extrabold text-sm leading-snug text-[#1B3A4D]">{t.label}</span>
                       <span
                         className="text-xs font-bold tabular-nums px-2 py-0.5 rounded-full shrink-0"
-                        style={{ background: t.categoryBg, color: t.categoryColor }}
+                        style={{ background: t.bg, color: t.color }}
                       >
                         {t.count}
                       </span>
                     </div>
-                    <p className="text-[11px] text-[#5C7483] mt-1">
-                      {t.count === 1 ? '1 case' : `${t.count} cases`}
-                    </p>
+                    <p className="text-[11px] text-[#5C7483] mt-1 leading-relaxed">{t.description}</p>
                   </button>
                 ))}
               </div>
@@ -404,7 +458,7 @@ export default function CasesPage() {
                 </div>
               ))}
 
-              {(query || selectedTheme) && (
+              {(query || selectedTypeId) && (
                 <div
                   className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold sm:ml-auto"
                   style={{ background: '#E8F4F6', color: '#1B6B7D' }}
@@ -448,18 +502,18 @@ export default function CasesPage() {
           <div className="text-center py-12 text-[#5C7483]">
             <Tag className="w-8 h-8 mx-auto mb-3 opacity-40" />
             <p className="font-semibold">
-              {selectedTheme
-                ? `No cases in “${selectedTheme}”${query ? ' match your search' : ''}`
+              {selectedTypeId
+                ? `No cases in this focus area${query ? ' match your search' : ''}`
                 : `No cases match “${query}”`}
             </p>
-            {selectedTheme && (
+            {selectedTypeId && (
               <button
                 type="button"
-                onClick={() => setSelectedTheme(null)}
+                onClick={() => setSelectedTypeId(null)}
                 className="mt-4 px-4 py-2 rounded-xl text-xs font-bold text-white"
                 style={{ background: '#1B6B7D' }}
               >
-                Show all themes
+                Show all cases
               </button>
             )}
           </div>

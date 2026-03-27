@@ -18,12 +18,27 @@ _PRINCIPLE_KEYS = ("autonomy", "beneficence", "nonMal", "justice")
 
 _case_cache: dict[str, dict] = {}
 _case_list_cache: list[dict] | None = None
+_cases_fingerprint: tuple[tuple[str, int], ...] | None = None
 _cache_lock = threading.Lock()
 
 
+def _cases_disk_fingerprint() -> tuple[tuple[str, int], ...]:
+    """Names + mtimes of case JSON files; changes when files are added/edited/removed."""
+    if not CASES_DIR.is_dir():
+        return ()
+    return tuple(
+        (p.name, int(p.stat().st_mtime_ns)) for p in sorted(CASES_DIR.glob("*.json"))
+    )
+
+
+def _cache_stale() -> bool:
+    return _cases_fingerprint is None or _cases_disk_fingerprint() != _cases_fingerprint
+
+
 def _prime_cache() -> None:
-    """Load every case file into memory once."""
-    global _case_list_cache
+    """Load every case file from disk into memory."""
+    global _case_list_cache, _cases_fingerprint
+    _case_cache.clear()
     cases = []
     for f in sorted(CASES_DIR.glob("*.json")):
         try:
@@ -44,21 +59,22 @@ def _prime_cache() -> None:
         except Exception:
             pass  # skip corrupt files
     _case_list_cache = cases
+    _cases_fingerprint = _cases_disk_fingerprint()
 
 
 def invalidate_case_cache() -> None:
+    global _case_list_cache, _cases_fingerprint
     with _cache_lock:
         _case_cache.clear()
-        global _case_list_cache
         _case_list_cache = None
+        _cases_fingerprint = None
 
 
 def load_case(case_id: str) -> dict:
     with _cache_lock:
-        if not _case_list_cache:
+        if _cache_stale():
             _prime_cache()
-        if case_id not in _case_cache:
-            # Try a fresh scan in case a new file was added.
+        elif case_id not in _case_cache:
             _prime_cache()
         data = _case_cache.get(case_id)
     if data is None:
@@ -68,7 +84,7 @@ def load_case(case_id: str) -> dict:
 
 def list_cases() -> list[dict]:
     with _cache_lock:
-        if _case_list_cache is None:
+        if _cache_stale():
             _prime_cache()
         return list(_case_list_cache or [])
 
