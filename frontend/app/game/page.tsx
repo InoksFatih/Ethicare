@@ -27,12 +27,11 @@ import ConsultationScene from "@/components/ethicare/consultation-scene"
 import ComplicationModal, { type ComplicationCard } from "@/components/ethicare/complication-modal"
 import { buildPrinciplesAnalysis, outcomeNarrative } from "@/lib/debrief-analysis"
 import { resolveCertificatePatientSubtitle } from "@/lib/certificate-subtitles"
+import { getPublicApiBase } from "@/lib/public-runtime"
 
 // Local fallback clips served from `/media/<file>` (Next route backed by `frontend/media/`).
 const DOC_FALLBACK_VIDEO_URL = "/media/docexamine1.mp4"
 const YSF_FALLBACK_VIDEO_URL = "/media/ysf_intro.mp4"
-
-const BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000"
 
 /** Optional HeyGen-exported clip (or any MP4/WebM) for a one-avatar demo — e.g. `/videos/heygen-patient.mp4` */
 const DEMO_AVATAR_VIDEO_URL = process.env.NEXT_PUBLIC_ETHICARE_DEMO_AVATAR_VIDEO_URL?.trim() || undefined
@@ -502,7 +501,7 @@ export default function EthiCarePage() {
         setCaseLoading(true)
         setCaseError(null)
 
-        const r = await fetch(`${BASE}/cases/${encodeURIComponent(caseId)}`)
+        const r = await fetch(`${getPublicApiBase()}/cases/${encodeURIComponent(caseId)}`)
         if (!r.ok) {
           throw new Error(r.status === 404 ? "Case not found" : `HTTP ${r.status}`)
         }
@@ -510,7 +509,7 @@ export default function EthiCarePage() {
         const data: CaseData = await r.json()
         let nextPlayId: string | null = null
         try {
-          const sr = await fetch(`${BASE}/cases/${encodeURIComponent(caseId)}/start`, {
+          const sr = await fetch(`${getPublicApiBase()}/cases/${encodeURIComponent(caseId)}/start`, {
             method: "POST",
           })
           if (sr.ok) {
@@ -745,7 +744,7 @@ export default function EthiCarePage() {
 
     let certDecisionSucceeded = false
     try {
-      const r = await fetch(`${BASE}/cases/${encodeURIComponent(caseData.id)}/decision`, {
+      const r = await fetch(`${getPublicApiBase()}/cases/${encodeURIComponent(caseData.id)}/decision`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -819,7 +818,7 @@ export default function EthiCarePage() {
           justice: String(currentScores.justice),
         })
 
-    const r = await fetch(`${BASE}/cases/${encodeURIComponent(caseData.id)}/debrief?${qs.toString()}`)
+    const r = await fetch(`${getPublicApiBase()}/cases/${encodeURIComponent(caseData.id)}/debrief?${qs.toString()}`)
     if (!r.ok) throw new Error(`Debrief request failed (${r.status})`)
 
     const data: DebriefResponse = await r.json()
@@ -889,7 +888,7 @@ export default function EthiCarePage() {
     setLastPrincipleDelta(null)
     setCertPatientHoldUrl(null)
     // Refresh authoritative server-side play session for this new run.
-    void fetch(`${BASE}/cases/${encodeURIComponent(caseData.id)}/start`, { method: "POST" })
+    void fetch(`${getPublicApiBase()}/cases/${encodeURIComponent(caseData.id)}/start`, { method: "POST" })
       .then((r) => (r.ok ? r.json() : null))
       .then((d) => setPlayId((d as StartCaseResponse | null)?.play_id ?? null))
       .catch(() => setPlayId(null))

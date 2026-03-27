@@ -27,11 +27,10 @@ import {
   Sparkles,
   Mic,
 } from "lucide-react"
+import { getPublicApiBase } from "@/lib/public-runtime"
 
 const STORAGE_KEY = "ethicare-live-mode-v2"
 const LEGACY_STORAGE_KEY = "ethicare-live-mode-v1"
-
-const BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000"
 
 function httpErrorDetail(data: unknown): string {
   if (!data || typeof data !== "object") return "Request failed"
@@ -525,7 +524,7 @@ export default function LiveModeDesignerPage() {
         router.push("/classroom")
         return
       }
-      fetch(`${BASE}/live-mode/create-live-session`, {
+      fetch(`${getPublicApiBase()}/live-mode/create-live-session`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -586,7 +585,7 @@ export default function LiveModeDesignerPage() {
       .filter(Boolean)
       .slice(0, 12)
     try {
-      const r = await fetch(`${BASE}/live-mode/generate-scenarios`, {
+      const r = await fetch(`${getPublicApiBase()}/live-mode/generate-scenarios`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -726,7 +725,7 @@ export default function LiveModeDesignerPage() {
 
   useEffect(() => {
     let cancelled = false
-    fetch(`${BASE}/live-mode/status`)
+    fetch(`${getPublicApiBase()}/live-mode/status`)
       .then((res) => res.json())
       .then((d: { openai_configured?: boolean }) => {
         if (!cancelled) setOpenaiReady(!!d.openai_configured)

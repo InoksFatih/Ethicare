@@ -19,8 +19,7 @@ import {
   WifiOff,
 } from "lucide-react"
 import { useClassroomSocket, type StatsPayload, type WSMessage } from "@/hooks/useClassroomSocket"
-
-const BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000"
+import { getPublicApiBase } from "@/lib/public-runtime"
 const PUBLIC_JOIN_BASE = process.env.NEXT_PUBLIC_PUBLIC_JOIN_BASE_URL?.replace(/\/$/, "")
 
 function makeJoinUrl(sessionId: string): string {
@@ -122,7 +121,7 @@ export default function LiveSessionInstructorPage() {
     async function load() {
       setLoading(true)
       try {
-        const r = await fetch(`${BASE}/classroom/sessions/${sid}`)
+        const r = await fetch(`${getPublicApiBase()}/classroom/sessions/${sid}`)
         if (!r.ok) return
         const s = await r.json()
         if (!cancelled) {
@@ -131,7 +130,7 @@ export default function LiveSessionInstructorPage() {
           setPhase((s.phase ?? "waiting"))
           setCaseData(s.case_data ?? null)
         }
-        const st = await fetch(`${BASE}/classroom/sessions/${sid}/stats?step_id=s1`)
+        const st = await fetch(`${getPublicApiBase()}/classroom/sessions/${sid}/stats?step_id=s1`)
         if (st.ok && !cancelled) {
           setStats(await st.json())
         }
@@ -149,7 +148,7 @@ export default function LiveSessionInstructorPage() {
    */
   const refreshClustered = useCallback(async () => {
     try {
-      const r = await fetch(`${BASE}/classroom/sessions/${sid}/responses?step_id=s1`)
+      const r = await fetch(`${getPublicApiBase()}/classroom/sessions/${sid}/responses?step_id=s1`)
       if (!r.ok) return
       const d = await r.json()
       if (!d?.clusters) return
@@ -238,7 +237,7 @@ export default function LiveSessionInstructorPage() {
     let cancelled = false
     void (async () => {
       try {
-        const r = await fetch(`${BASE}/classroom/sessions/${sid}`)
+        const r = await fetch(`${getPublicApiBase()}/classroom/sessions/${sid}`)
         if (!r.ok || cancelled) return
         const s = await r.json()
         if (cancelled) return
@@ -283,7 +282,7 @@ export default function LiveSessionInstructorPage() {
     setEvents([])
     setResetting(true)
     try {
-      const r = await fetch(`${BASE}/classroom/sessions/${sid}/reset?step_id=s1`, { method: "POST" })
+      const r = await fetch(`${getPublicApiBase()}/classroom/sessions/${sid}/reset?step_id=s1`, { method: "POST" })
       if (!r.ok) throw new Error("Reset request failed")
       setResponseCount(0)
       setStats(null)

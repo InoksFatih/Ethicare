@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react"
 import Link from "next/link"
 import { ArrowLeft, Server, ExternalLink } from "lucide-react"
 
-const BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000"
+const CONFIGURED_API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000"
 const LIVE_PRESENTATION_DEFAULT_KEY = "ethicare-live-presentation-default"
 
 export default function SettingsPage() {
@@ -67,7 +67,15 @@ export default function SettingsPage() {
             backend.
           </p>
           <p className="text-sm font-mono text-[#1B3A4D] break-all bg-[#F8FAFC] rounded-lg px-3 py-2 border border-[#E2E8F0]">
-            {BASE}
+            {CONFIGURED_API_URL}
+          </p>
+          <p className="text-[11px] text-[#64748B] mt-2 leading-snug">
+            For public join links (QR) on phones using 4G or another Wi‑Fi, deploy the frontend on{" "}
+            <strong className="text-[#334155]">https</strong> and point{" "}
+            <code className="bg-[#F1F5F9] px-1 rounded">NEXT_PUBLIC_API_URL</code> /{" "}
+            <code className="bg-[#F1F5F9] px-1 rounded">NEXT_PUBLIC_WS_URL</code> at your{" "}
+            <strong className="text-[#334155]">public</strong> API (https + wss). This app upgrades insecure remote
+            URLs when the page is served over HTTPS so browsers do not block mixed content.
           </p>
         </div>
 

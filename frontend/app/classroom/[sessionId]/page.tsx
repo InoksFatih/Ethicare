@@ -15,8 +15,7 @@ import {
   type StatsPayload,
   type WSMessage,
 } from "@/hooks/useClassroomSocket"
-
-const BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000"
+import { getPublicApiBase } from "@/lib/public-runtime"
 const PUBLIC_JOIN_BASE = process.env.NEXT_PUBLIC_PUBLIC_JOIN_BASE_URL?.replace(/\/$/, "")
 
 function makeJoinUrl(sessionId: string): string {
@@ -312,14 +311,14 @@ export default function ClassroomDashboard() {
   useEffect(() => {
     async function loadSession() {
       try {
-        const r = await fetch(`${BASE}/classroom/sessions/${sessionId}`)
+        const r = await fetch(`${getPublicApiBase()}/classroom/sessions/${sessionId}`)
         if (!r.ok) return
         const session = await r.json()
         if (session.case_data) {
           setCaseData(session.case_data)
           return
         }
-        const cr = await fetch(`${BASE}/cases/${session.case_id}`)
+        const cr = await fetch(`${getPublicApiBase()}/cases/${session.case_id}`)
         if (!cr.ok) return
         setCaseData(await cr.json())
       } finally {
@@ -356,7 +355,7 @@ export default function ClassroomDashboard() {
     if (!connected || !sessionId) return
     void (async () => {
       try {
-        const r = await fetch(`${BASE}/classroom/sessions/${sessionId}`)
+        const r = await fetch(`${getPublicApiBase()}/classroom/sessions/${sessionId}`)
         if (!r.ok) return
         const s = await r.json()
         setStudentCount(s.student_count ?? 0)
@@ -377,7 +376,7 @@ export default function ClassroomDashboard() {
     if (next.id === "cluster_view") {
       setLoadingData(true)
       try {
-        const r = await fetch(`${BASE}/classroom/sessions/${sessionId}/responses?step_id=s1`)
+        const r = await fetch(`${getPublicApiBase()}/classroom/sessions/${sessionId}/responses?step_id=s1`)
         if (r.ok) setClusteredData(await r.json())
       } finally {
         setLoadingData(false)

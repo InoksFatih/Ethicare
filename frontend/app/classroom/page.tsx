@@ -4,8 +4,7 @@ import React, { useEffect, useMemo, useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { Loader2, PlayCircle, ChevronRight, Users, BookOpen, FlaskConical, ArrowLeft, Radio } from "lucide-react"
-
-const BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000"
+import { getPublicApiBase } from "@/lib/public-runtime"
 
 type CaseSummary = {
   id: string
@@ -49,7 +48,7 @@ export default function ClassroomIndex() {
     async function loadCases() {
       setLoadingCases(true)
       try {
-        const r = await fetch(`${BASE}/cases/`)
+        const r = await fetch(`${getPublicApiBase()}/cases/`)
         if (!r.ok) throw new Error(`Failed to load cases (${r.status})`)
         const data = (await r.json()) as CaseSummary[]
         if (!cancelled) setCases(Array.isArray(data) ? data : [])
@@ -79,7 +78,7 @@ export default function ClassroomIndex() {
     setLoading(true)
     setError(null)
     try {
-      const r = await fetch(`${BASE}/classroom/sessions?case_id=${selected}`, {
+      const r = await fetch(`${getPublicApiBase()}/classroom/sessions?case_id=${selected}`, {
         method: "POST",
       })
       if (!r.ok) throw new Error(`Server error ${r.status}`)

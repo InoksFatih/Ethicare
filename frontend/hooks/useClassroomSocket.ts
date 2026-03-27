@@ -1,11 +1,7 @@
 "use client"
 
 import { useCallback, useEffect, useRef, useState } from "react"
-
-const WS_BASE = (process.env.NEXT_PUBLIC_WS_URL ?? "ws://localhost:8000").replace(
-  /\/$/,
-  "",
-)
+import { getPublicWsBase } from "@/lib/public-runtime"
 
 const PING_INTERVAL_MS = 25_000
 const MAX_BACKOFF_MS = 10_000
@@ -141,10 +137,11 @@ export function useClassroomSocket({
     const buildUrl = (): string | null => {
       if (!sid) return null
       if (role === "student" && !studentId?.trim()) return null
+      const wsBase = getPublicWsBase()
       if (role === "instructor") {
-        return `${WS_BASE}/classroom/ws/instructor/${sid}`
+        return `${wsBase}/classroom/ws/instructor/${sid}`
       }
-      return `${WS_BASE}/classroom/ws/student/${sid}/${encodeURIComponent(studentId!.trim())}`
+      return `${wsBase}/classroom/ws/student/${sid}/${encodeURIComponent(studentId!.trim())}`
     }
 
     const scheduleReconnect = () => {

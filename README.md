@@ -230,6 +230,27 @@ Set this in backend:
 
 With these values, QR codes point to a public join URL usable by anyone.
 
+Phones on **4G or another Wi‑Fi** still work as long as both URLs are **public** (not `localhost`). The frontend is served over **HTTPS**, so API calls use **https://** and websockets use **wss://**. If you forget and set `http://` / `ws://` for a remote host, the browser build upgrades those to **https://** / **wss://** when the page is loaded over HTTPS (see `frontend/lib/public-runtime.ts`).
+
+---
+
+## Deploying on Railway (monorepo)
+
+If Railway shows **“Railpack could not determine how to build the app”** and lists only `backend/`, `frontend/`, `README.md` at the repo root, the service is building from the **wrong directory**. At the monorepo root there is no `package.json` or `requirements.txt`, so auto-detect fails.
+
+Do this:
+
+1. Create **two** services in one Railway project (e.g. `ethicare-backend`, `ethicare-frontend`).
+2. For each service, open **Settings → Root Directory**:
+   - Backend: `backend`
+   - Frontend: `frontend`
+3. Connect the **same GitHub repo** to both services.
+4. Each folder already has a **`Dockerfile`** and a **`railway.json`** that sets `"builder": "DOCKERFILE"` so Railway builds via Docker instead of guessing with Railpack at the wrong root.
+5. Generate a **public domain** for each service. Set variables (see **Production URL Variables** above), using your real `*.up.railway.app` URLs: `NEXT_PUBLIC_*` on the frontend, `CORS_ORIGINS` + `OPENAI_API_KEY` on the backend.
+6. Redeploy the frontend after changing `NEXT_PUBLIC_*`.
+
+Official guide: [Deploying a monorepo to Railway](https://docs.railway.com/guides/deploying-a-monorepo).
+
 ---
 
 ## Tech Stack

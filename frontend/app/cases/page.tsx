@@ -3,8 +3,9 @@
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { ArrowLeft, Search, Tag, Zap, Clock, ChevronRight, AlertCircle, Radio } from 'lucide-react'
+import { getPublicApiBase } from '@/lib/public-runtime'
 
-const BASE = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:8000'
+const CONFIGURED_API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:8000'
 
 interface CaseSummary {
   id: string
@@ -128,7 +129,7 @@ export default function CasesPage() {
         setLoading(true)
         setError(null)
 
-        const r = await fetch(`${BASE}/cases/`)
+        const r = await fetch(`${getPublicApiBase()}/cases/`)
         if (!r.ok) throw new Error(`HTTP ${r.status}`)
 
         const data = await r.json()
@@ -258,7 +259,7 @@ export default function CasesPage() {
             <p className="font-bold text-[#1B3A4D] mb-1">Backend unreachable</p>
             <p className="text-xs text-[#5C7483] mb-4">
               Make sure FastAPI is running at{' '}
-              <code className="bg-gray-100 px-1 rounded">{BASE}</code>
+              <code className="bg-gray-100 px-1 rounded">{CONFIGURED_API_URL}</code>
             </p>
             <button
               onClick={() => window.location.reload()}
