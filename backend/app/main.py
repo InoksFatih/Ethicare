@@ -84,6 +84,20 @@ app.include_router(classroom_router)
 app.include_router(live_mode_router)
 
 
+@app.get("/")
+def root():
+    """Railway/browser sanity check — there is no SPA at `/`; use `/docs` or `/health`."""
+    return {
+        "service":          "EthiCare API",
+        "version":          "1.1.0",
+        "health":           "/health",
+        "openapi_docs":     "/docs",
+        "cases":            "/cases/",
+        "classroom_prefix": "/classroom",
+        "live_mode_prefix": "/live-mode",
+    }
+
+
 @app.get("/health")
 def health():
     return {
