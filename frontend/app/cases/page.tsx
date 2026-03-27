@@ -262,7 +262,7 @@ export default function CasesPage() {
 
         <Link
           href="/live-mode"
-          className="flex items-center gap-1.5 shrink-0 px-3 py-2 rounded-xl text-xs font-bold text-white transition-colors hover:bg-white/10"
+          className="ml-auto sm:ml-0 flex items-center gap-1.5 shrink-0 px-3 py-2 rounded-xl text-xs font-bold text-white transition-colors hover:bg-white/10"
           style={{ background: 'rgba(255,255,255,0.12)', border: '1px solid rgba(255,255,255,0.2)' }}
         >
           <Radio className="w-3.5 h-3.5 opacity-90" />
