@@ -1,0 +1,196 @@
+{
+  "id": "case_16",
+  "num": "16",
+  "title": "After the Wrong-Site Line",
+  "desc": "In orthopedics, the team marked the wrong knee on the consent form. Surgery was stopped in time — no incision. The patient is still under anesthesia in the holding area.",
+  "category": "Disclosure & Safety",
+  "categoryColor": "#b91c1c",
+  "categoryBg": "#fee2e2",
+  "difficulty": "Medium",
+  "diffColor": "#f47a3a",
+  "tags": ["Medical Error", "Honesty", "Patient Safety", "Culture of safety"],
+  "patient": {
+    "name": "Omar",
+    "age": 52,
+    "condition": "Scheduled knee arthroscopy — near miss, no harm incurred",
+    "gender": "male"
+  },
+  "law": {
+    "country": "🇲🇦 Code de Déontologie Médicale",
+    "article": "Honesty & patient trust",
+    "text": "The physician owes the patient loyal, clear information material to understanding their situation — including serious process failures that affect trust and future decisions."
+  },
+  "initScores": { "autonomy": 50, "beneficence": 50, "nonMal": 50, "justice": 50 },
+  "initEmo": { "fear": 40, "trust": 55, "pain": 25 },
+  "complications": [
+    {
+      "id": "err-chair",
+      "title": "Chief asks minimal charting",
+      "tag": "Cover-up",
+      "premise": "Risk office fears premium hikes.",
+      "liveLine": "\"Document 'consent clarified pre-incision' — full detail invites lawsuits. He wasn't cut; no harm, no story.\"",
+      "channelLabel": "Chief · side room",
+      "fear": 14,
+      "trust": -24,
+      "pain": 8
+    },
+    {
+      "id": "err-nurse",
+      "title": "Circulating nurse shaken",
+      "tag": "Moral distress",
+      "premise": "She worries the team will blame her for sign-in.",
+      "liveLine": "\"I said the site out loud — everyone rushed. If this disappears from the record, I'll lose faith.\"",
+      "channelLabel": "OR · supply",
+      "fear": 12,
+      "trust": 6,
+      "pain": 10
+    },
+    {
+      "id": "err-spouse",
+      "title": "Spouse demands 'truth'",
+      "tag": "Family",
+      "premise": "She saw staff whispering.",
+      "liveLine": "\"Something went wrong — I know it. Tell me before he wakes up or I'll go to the press.\"",
+      "channelLabel": "Waiting · corridor",
+      "fear": 20,
+      "trust": -12,
+      "pain": 14
+    },
+    {
+      "id": "err-insurance",
+      "title": "COD request",
+      "tag": "Billing",
+      "premise": "Coder asks for clean diagnosis line.",
+      "liveLine": "\"If you list 'wrong-site near miss,' preauth may void — can we keep it generic?\"",
+      "channelLabel": "Admin · ping",
+      "fear": 10,
+      "trust": -16,
+      "pain": 6
+    }
+  ],
+  "steps": [
+    {
+      "id": "s1",
+      "msg": "Attending whispers: \"We caught it. He's stable. Do we wake him and tell him everything now, or wait until he's clear-headed tomorrow?\"",
+      "q": "Immediate ethical obligation?",
+      "hint": "Transparency soon; timing should not be used to hide:",
+      "choices": [
+        {
+          "id": "prompt_disclose",
+          "icon": "💬",
+          "label": "Plan disclosure as soon as clinically safe today",
+          "sub": "✓ Open accountability",
+          "reaction": "When I wake, I want the truth before rumors spread.",
+          "delta": { "autonomy": 8, "beneficence": 6, "nonMal": 6, "justice": 6 },
+          "emo": { "fear": 6, "trust": 26, "pain": -4 }
+        },
+        {
+          "id": "hide_tomorrow",
+          "icon": "🌙",
+          "label": "Defer indefinitely to protect anxiety",
+          "sub": "Paternal omission",
+          "reaction": "I always suspected you hid something — trust died slowly.",
+          "delta": { "autonomy": -8, "beneficence": -2, "nonMal": -4, "justice": -6 },
+          "emo": { "fear": 18, "trust": -30, "pain": 12 }
+        },
+        {
+          "id": "partial_truth",
+          "icon": "📝",
+          "label": "Tell only \"procedure delayed\"",
+          "sub": "Misleading",
+          "reaction": "Half-truth feels like fraud when I learn more later.",
+          "delta": { "autonomy": -10, "beneficence": 0, "nonMal": -6, "justice": -4 },
+          "emo": { "fear": 14, "trust": -28, "pain": 8 }
+        },
+        {
+          "id": "incident_only",
+          "icon": "📊",
+          "label": "File internal incident only",
+          "sub": "Patient left out",
+          "reaction": "Systems improved — but I wasn't respected as a person.",
+          "delta": { "autonomy": -12, "beneficence": 2, "nonMal": 4, "justice": 2 },
+          "emo": { "fear": 12, "trust": -22, "pain": 6 }
+        }
+      ]
+    },
+    {
+      "id": "s2",
+      "msg": "Omar wakes groggy but oriented. He asks: \"Why is my surgery band on the other leg? Did you operate on the wrong knee?\"",
+      "q": "How do you answer?",
+      "hint": "Plain facts, apology for process failure, clarify no surgical harm:",
+      "choices": [
+        {
+          "id": "full_plain",
+          "icon": "✅",
+          "label": "Clear facts + apology + next steps",
+          "sub": "✓ Best practice",
+          "reaction": "I'm furious — but I believe you stopped in time.",
+          "delta": { "autonomy": 10, "beneficence": 8, "nonMal": 8, "justice": 8 },
+          "emo": { "fear": 12, "trust": 28, "pain": -6 }
+        },
+        {
+          "id": "blame_junior",
+          "icon": "👤",
+          "label": "Blame the resident quietly",
+          "sub": "Scapegoating",
+          "reaction": "Whispers say you lied about who failed — I trust no one.",
+          "delta": { "autonomy": -8, "beneficence": -4, "nonMal": -6, "justice": -10 },
+          "emo": { "fear": 20, "trust": -32, "pain": 14 }
+        },
+        {
+          "id": "deny",
+          "icon": "🙈",
+          "label": "Deny any error — \"labeling confusion only\"",
+          "sub": "Gaslighting",
+          "reaction": "I'll get my records — legally.",
+          "delta": { "autonomy": -12, "beneficence": -6, "nonMal": -8, "justice": -8 },
+          "emo": { "fear": 22, "trust": -35, "pain": 10 }
+        }
+      ]
+    },
+    {
+      "id": "s3",
+      "msg": "Omar wants reschedule with a different surgeon, and asks the hospital to pay for anxiety counseling. Risk wants a liability waiver before paying anything.",
+      "q": "How do you support fair resolution?",
+      "hint": "Remediation should not silence safety learning:",
+      "choices": [
+        {
+          "id": "fair_remedy",
+          "icon": "🤝",
+          "label": "Advocate remediation without gag coercion",
+          "sub": "✓ Restorative",
+          "reaction": "I can heal emotionally without signing away my voice.",
+          "delta": { "autonomy": 8, "beneficence": 8, "nonMal": 6, "justice": 10 },
+          "emo": { "fear": -10, "trust": 26, "pain": -16 }
+        },
+        {
+          "id": "gag_money",
+          "icon": "🤐",
+          "label": "Push him to sign silence for cash",
+          "sub": "Institutional cynicism",
+          "reaction": "You bought my anger — you didn't earn trust.",
+          "delta": { "autonomy": -6, "beneficence": 2, "nonMal": -4, "justice": -12 },
+          "emo": { "fear": 8, "trust": -18, "pain": 18 }
+        },
+        {
+          "id": "abandon",
+          "icon": "🚪",
+          "label": "Transfer care — \"not your problem\"",
+          "sub": "Abdication",
+          "reaction": "Typical — once embarrassed, doctors vanish.",
+          "delta": { "autonomy": -6, "beneficence": -8, "nonMal": -4, "justice": -6 },
+          "emo": { "fear": 16, "trust": -26, "pain": 14 }
+        }
+      ]
+    }
+  ],
+  "debrief": {
+    "summary": "Near-miss disclosure is still a serious honesty duty — patients deserve process transparency, sincere apology, and system fixes without coercive silence agreements. Blaming juniors or minimising facts destroys safety culture.",
+    "points": [
+      "Harm includes betrayal of trust even without tissue injury.",
+      "Apology paired with facts is professional, not an admission of criminal guilt.",
+      "Incident reporting and patient communication serve different but linked duties.",
+      "Restitution should support recovery, not trade silence for money under pressure."
+    ]
+  }
+}

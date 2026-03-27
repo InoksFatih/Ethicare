@@ -1,0 +1,196 @@
+{
+  "id": "case_18",
+  "num": "18",
+  "title": "Donation After Brain Death",
+  "desc": "Brain death is declared. Half the family wants organ donation; the other half refuses, invoking faith and fear that 'they will kill him for organs while his heart still beats.' Media attention is building outside.",
+  "category": "Organ Donation",
+  "categoryColor": "#0d9488",
+  "categoryBg": "#ccfbf1",
+  "difficulty": "Hard",
+  "diffColor": "#e04f4f",
+  "tags": ["Brain death", "Family conflict", "Faith", "Public trust"],
+  "patient": {
+    "name": "Mehdi",
+    "age": 31,
+    "condition": "Declared brain death after traumatic brain injury — donation-eligible",
+    "gender": "male"
+  },
+  "law": {
+    "country": "🇲🇦 Transplant / ethics framework",
+    "article": "Consent & family harmony",
+    "text": "Organ procurement proceeds only within legal consent pathways; physicians must explain brain death clearly and resist both coercive donation pressure and obstructive misinformation."
+  },
+  "initScores": { "autonomy": 50, "beneficence": 50, "nonMal": 50, "justice": 50 },
+  "initEmo": { "fear": 68, "trust": 42, "pain": 30 },
+  "complications": [
+    {
+      "id": "don-media",
+      "title": "Reporter live outside",
+      "tag": "Viral rumor",
+      "premise": "Headline already claims 'hospital stealing organs'.",
+      "liveLine": "PA: \"News crew wants a statement on whether you're 'expediting death for parts'.\"",
+      "channelLabel": "Comms · page",
+      "fear": 22,
+      "trust": -20,
+      "pain": 12
+    },
+    {
+      "id": "don-imam",
+      "title": "Two opposing advisers",
+      "tag": "Religious pluralism",
+      "premise": "One scholar supports donation; another forbids it.",
+      "liveLine": "Family shouts over speakerphone — Mehdi's brother collapses in a chair.",
+      "channelLabel": "Waiting · phone",
+      "fear": 18,
+      "trust": -10,
+      "pain": 22
+    },
+    {
+      "id": "don-procure",
+      "title": "OPO pushes clock",
+      "tag": "Utility pressure",
+      "premise": "Organ preservation window stressed.",
+      "liveLine": "\"We need a clear yes or the match list loses kidneys tonight — what is the family's final word?\"",
+      "channelLabel": "OPO · call",
+      "fear": 14,
+      "trust": -8,
+      "pain": 10
+    },
+    {
+      "id": "don-cousin",
+      "title": "Cousin with power of attorney",
+      "tag": "Legal fog",
+      "premise": "Old form may not reflect current law.",
+      "liveLine": "\"I signed for him years ago — I say donate, period.\" Aunt: \"You never spoke for him in life!\"",
+      "channelLabel": "Family · clash",
+      "fear": 20,
+      "trust": -16,
+      "pain": 16
+    }
+  ],
+  "steps": [
+    {
+      "id": "s1",
+      "msg": "Sister: \"His heart is beating on the monitor — how is he dead? You're lying for organs.\" Nephew: \"Dad wanted to donate — he told me.\"",
+      "q": "Your first communication task?",
+      "hint": "Separate explaining death physiology from donation solicitation:",
+      "choices": [
+        {
+          "id": "clear_bd",
+          "icon": "🧠",
+          "label": "Family meeting: brain death explained without donation talk",
+          "sub": "✓ Clarity first",
+          "reaction": "Painful silence — but the myth 'heartbeat = alive' dissolves a little.",
+          "delta": { "autonomy": 6, "beneficence": 8, "nonMal": 7, "justice": 4 },
+          "emo": { "fear": 10, "trust": 24, "pain": -6 }
+        },
+        {
+          "id": "don_first",
+          "icon": "❤️",
+          "label": "Lead with transplant needs and waiting lists",
+          "sub": "Rushed framing",
+          "reaction": "They hear sales pressure, not medical truth.",
+          "delta": { "autonomy": -6, "beneficence": 2, "nonMal": -2, "justice": 2 },
+          "emo": { "fear": 18, "trust": -22, "pain": 14 }
+        },
+        {
+          "id": "strip_monitors",
+          "icon": "📺",
+          "label": "Remove screens so family cannot see rhythms",
+          "sub": "Avoidance",
+          "reaction": "Distrust spikes — \"what are you hiding?\"",
+          "delta": { "autonomy": -10, "beneficence": -4, "nonMal": -6, "justice": -4 },
+          "emo": { "fear": 26, "trust": -28, "pain": 18 }
+        },
+        {
+          "id": "security_remove",
+          "icon": "🚔",
+          "label": "Threaten security if family disagrees",
+          "sub": "Coercion",
+          "reaction": "A viral video of your tone destroys public trust.",
+          "delta": { "autonomy": -12, "beneficence": -8, "nonMal": -10, "justice": -8 },
+          "emo": { "fear": 24, "trust": -35, "pain": 20 }
+        }
+      ]
+    },
+    {
+      "id": "s2",
+      "msg": "After explanation, dissent remains 3–3. No registered donor preference is found. OPO asks you to seek 'presumptive consent' angles — legally grey in your setting.",
+      "q": "How do you proceed legally and ethically?",
+      "hint": "Follow governing law; avoid stretching consent:",
+      "choices": [
+        {
+          "id": "legal_default",
+          "icon": "⚖️",
+          "label": "Apply clear national consent rules; no donation if not met",
+          "sub": "✓ Rule of law",
+          "reaction": "Tears — but no one is overridden by whisper campaigns.",
+          "delta": { "autonomy": 4, "beneficence": 4, "nonMal": 6, "justice": 10 },
+          "emo": { "fear": 8, "trust": 18, "pain": -4 }
+        },
+        {
+          "id": "stretch_yes",
+          "icon": "🔓",
+          "label": "Stretch interpretation to authorize retrieval",
+          "sub": "Ends-justify-means",
+          "reaction": "Legal complaint and family trauma haunt the program.",
+          "delta": { "autonomy": -10, "beneficence": 6, "nonMal": -8, "justice": -12 },
+          "emo": { "fear": 20, "trust": -30, "pain": 16 }
+        },
+        {
+          "id": "cooling_off",
+          "icon": "🕊️",
+          "label": "Request additional mediation hours before final answer",
+          "sub": "Time for grief",
+          "reaction": "Some relatives shift — organ viability may be lost.",
+          "delta": { "autonomy": 6, "beneficence": 2, "nonMal": 4, "justice": 4 },
+          "emo": { "fear": -6, "trust": 14, "pain": -8 }
+        }
+      ]
+    },
+    {
+      "id": "s3",
+      "msg": "Family finally refuses donation unanimously after mediation. A young intern posts a frustrated tweet about 'wasted organs' without names.",
+      "q": "Institutional response?",
+      "hint": "Support staff education; protect families from shaming:",
+      "choices": [
+        {
+          "id": "edu_debrief",
+          "icon": "🎓",
+          "label": "Confidential debrief + social-media policy reminder",
+          "sub": "✓ Culture repair",
+          "reaction": "The ward learns grief ethics without public scalding.",
+          "delta": { "autonomy": 4, "beneficence": 6, "nonMal": 6, "justice": 8 },
+          "emo": { "fear": -8, "trust": 20, "pain": -10 }
+        },
+        {
+          "id": "public_shame",
+          "icon": "🐦",
+          "label": "Retweet to 'raise awareness'",
+          "sub": "Betrayal",
+          "reaction": "Family recognizes context — lawsuit and headlines explode.",
+          "delta": { "autonomy": -12, "beneficence": -6, "nonMal": -10, "justice": -14 },
+          "emo": { "fear": 28, "trust": -38, "pain": 22 }
+        },
+        {
+          "id": "fire_intern",
+          "icon": "🚫",
+          "label": "Fire intern publicly as scapegoat",
+          "sub": "Avoid leadership accountability",
+          "reaction": "Staff fear reporting future errors.",
+          "delta": { "autonomy": -4, "beneficence": -4, "nonMal": -4, "justice": -6 },
+          "emo": { "fear": 16, "trust": -20, "pain": 14 }
+        }
+      ]
+    }
+  ],
+  "debrief": {
+    "summary": "Organ donation ethics center on truthful brain-death education, lawful consent, and grieving-family support—not improvised coercion or social-media venting. Justice for wait-listed patients never authorizes bypassing clear family refusal rules.",
+    "points": [
+      "Separate declaring death from requesting organs; mixed messages fuel conspiracy.",
+      "Religious diversity requires scholarship and time, not bulldozing minority relatives.",
+      "Utility pressure from OPO must not distort clinical honesty or legal consent.",
+      "Train trainees on grief, confidentiality, and professionalism online."
+    ]
+  }
+}

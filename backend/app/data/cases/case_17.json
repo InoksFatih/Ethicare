@@ -1,0 +1,196 @@
+{
+  "id": "case_17",
+  "num": "17",
+  "title": "The Child Interpreter",
+  "desc": "A 12-year-old is translating your cancer disclosure for his grandmother, who speaks only Tashelhit. He paraphrases softly — you suspect he is hiding how serious it is.",
+  "category": "Communication & Equity",
+  "categoryColor": "#2563eb",
+  "categoryBg": "#dbeafe",
+  "difficulty": "Medium",
+  "diffColor": "#f47a3a",
+  "tags": ["Language", "Pediatric role", "Truth-telling", "Cultural safety"],
+  "patient": {
+    "name": "Lalla Khadija",
+    "age": 74,
+    "condition": "Advanced colorectal cancer — goals-of-care discussion",
+    "gender": "female"
+  },
+  "law": {
+    "country": "🇲🇦 Patient rights & ethics",
+    "article": "Information & dignity",
+    "text": "Patients have the right to understandable information about their condition; using minors as primary interpreters in grave discussions raises serious consent and harm concerns."
+  },
+  "initScores": { "autonomy": 50, "beneficence": 50, "nonMal": 50, "justice": 50 },
+  "initEmo": { "fear": 55, "trust": 48, "pain": 40 },
+  "complications": [
+    {
+      "id": "int-shift",
+      "title": "No formal interpreter",
+      "tag": "System failure",
+      "premise": "Phone line wait is two hours.",
+      "liveLine": "Charge nurse: \"Family says they've always used the grandson — can we just finish rounds?\"",
+      "channelLabel": "Ward · nursing",
+      "fear": 12,
+      "trust": -10,
+      "pain": 14
+    },
+    {
+      "id": "int-son",
+      "title": "Son insists",
+      "tag": "Family dynamics",
+      "premise": "Adult son wants the child to keep today's talk vague.",
+      "liveLine": "\"Mother shouldn't hear everything today — tell the boy to soften it.\"",
+      "channelLabel": "Family · bedside",
+      "fear": 16,
+      "trust": -14,
+      "pain": 18
+    },
+    {
+      "id": "int-boy",
+      "title": "Boy whispers to you",
+      "tag": "Burden on child",
+      "premise": "He asks if grandmother will die this year while she smiles.",
+      "liveLine": "His voice cracks; he is twelve.",
+      "channelLabel": "Room · aside",
+      "fear": 20,
+      "trust": 8,
+      "pain": 24
+    },
+    {
+      "id": "int-doc",
+      "title": "Consultant time pressure",
+      "tag": "Throughput",
+      "premise": "Oncology taps the door — consent forms need signing today.",
+      "liveLine": "\"Are we documenting goals-of-care or not?\"",
+      "channelLabel": "Doorway",
+      "fear": 14,
+      "trust": -8,
+      "pain": 12
+    }
+  ],
+  "steps": [
+    {
+      "id": "s1",
+      "msg": "The grandson begins: \"She says thank you for being gentle.\" You had just named metastatic disease. The grandmother looks relieved — too relieved.",
+      "q": "What do you do in the moment?",
+      "hint": "Do not proceed with life-altering decisions on child-filtered speech:",
+      "choices": [
+        {
+          "id": "pause_prof",
+          "icon": "⏸️",
+          "label": "Pause visit — secure professional interpreter",
+          "sub": "✓ Standard of care",
+          "reaction": "The family grumbles about delay — but dignity returns to the room.",
+          "delta": { "autonomy": 8, "beneficence": 8, "nonMal": 8, "justice": 8 },
+          "emo": { "fear": 8, "trust": 22, "pain": -6 }
+        },
+        {
+          "id": "accept_child",
+          "icon": "👦",
+          "label": "Continue relying on the child",
+          "sub": "Convenience",
+          "reaction": "Chart later says she 'understood' — she did not, truly.",
+          "delta": { "autonomy": -10, "beneficence": -6, "nonMal": -10, "justice": -10 },
+          "emo": { "fear": 6, "trust": -20, "pain": 20 }
+        },
+        {
+          "id": "english_only",
+          "icon": "🗣️",
+          "label": "Speak quickly in French only",
+          "sub": "Excludes patient",
+          "reaction": "Humiliation and fear — she withdraws from care.",
+          "delta": { "autonomy": -12, "beneficence": -8, "nonMal": -8, "justice": -8 },
+          "emo": { "fear": 22, "trust": -28, "pain": 16 }
+        },
+        {
+          "id": "son_only",
+          "icon": "👨",
+          "label": "Dismiss child; deal only with adult son",
+          "sub": "Sidelines patient",
+          "reaction": "Lalla Khadija realizes she's excluded — deep distress.",
+          "delta": { "autonomy": -8, "beneficence": -4, "nonMal": -6, "justice": -6 },
+          "emo": { "fear": 18, "trust": -22, "pain": 18 }
+        }
+      ]
+    },
+    {
+      "id": "s2",
+      "msg": "A video interpreter is connected. The adult son tries to answer questions directed to Lalla Khadija. She holds the boy's hand tightly.",
+      "q": "Who is your primary interlocutor?",
+      "hint": "Address the patient; manage family politely but firmly:",
+      "choices": [
+        {
+          "id": "patient_direct",
+          "icon": "🎯",
+          "label": "Direct questions to Lalla Khadija through interpreter",
+          "sub": "✓ Autonomy-centered",
+          "reaction": "Slowly, she owns the words — fear and clarity together.",
+          "delta": { "autonomy": 10, "beneficence": 8, "nonMal": 6, "justice": 6 },
+          "emo": { "fear": 12, "trust": 26, "pain": -8 }
+        },
+        {
+          "id": "son_filter",
+          "icon": "🪟",
+          "label": "Let the son filter all answers",
+          "sub": "Paternalism",
+          "reaction": "She signs forms nodding — uncertainty remains.",
+          "delta": { "autonomy": -10, "beneficence": 0, "nonMal": -4, "justice": -6 },
+          "emo": { "fear": 10, "trust": -18, "pain": 14 }
+        },
+        {
+          "id": "defer_discharge",
+          "icon": "🏠",
+          "label": "Postpone serious talk until outpatient",
+          "sub": "Avoidance",
+          "reaction": "Lost window — recurrence complications shock her in ER.",
+          "delta": { "autonomy": -6, "beneficence": -8, "nonMal": -8, "justice": -4 },
+          "emo": { "fear": 20, "trust": -24, "pain": 22 }
+        }
+      ]
+    },
+    {
+      "id": "s3",
+      "msg": "The boy cries in the hall: \"I didn't want to lie — they made me.\" Social work offers counseling. The family asks you not to document \"family coercion.\"",
+      "q": "How do you document and follow up?",
+      "hint": "Protect the child, be accurate, offer support:",
+      "choices": [
+        {
+          "id": "honest_chart_sw",
+          "icon": "📋",
+          "label": "Accurate chart + social work for child + family meeting",
+          "sub": "✓ Whole-family ethics",
+          "reaction": "Painful chart — but integrity and help align.",
+          "delta": { "autonomy": 6, "beneficence": 9, "nonMal": 8, "justice": 8 },
+          "emo": { "fear": -8, "trust": 24, "pain": -14 }
+        },
+        {
+          "id": "sanitize_chart",
+          "icon": "🧹",
+          "label": "Sanitize chart to appease family",
+          "sub": "Hides harm",
+          "reaction": "Next team repeats the interpreter mistake.",
+          "delta": { "autonomy": -8, "beneficence": -6, "nonMal": -8, "justice": -10 },
+          "emo": { "fear": 10, "trust": -22, "pain": 16 }
+        },
+        {
+          "id": "blame_child",
+          "icon": "❌",
+          "label": "Document child as \"unreliable historian\"",
+          "sub": "Blames victim",
+          "reaction": "The boy believes medicine punished him.",
+          "delta": { "autonomy": -10, "beneficence": -8, "nonMal": -10, "justice": -12 },
+          "emo": { "fear": 24, "trust": -30, "pain": 26 }
+        }
+      ]
+    }
+  ],
+  "debrief": {
+    "summary": "Children should not bear grave diagnostic translation. Professional interpreters, direct patient address, and honest documentation uphold autonomy and shield minors from impossible emotional duties.",
+    "points": [
+      "Convenience never justifies implied consent through a child's paraphrase.",
+      "Family cultural preferences are respected by timing and tone — not by hiding truth from a capable adult.",
+      "Health systems owe timely interpreter access; improvised fixes offload harm onto patients and kids.",
+      "Support both elder and child — ethical pediatric concern extends to the grandchildren in the room."
+    ]
+  }
+}

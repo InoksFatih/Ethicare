@@ -1,0 +1,196 @@
+{
+  "id": "case_14",
+  "num": "14",
+  "title": "One Bed, Two Lives",
+  "desc": "After a mass-casualty event, one monitored ICU bed remains. Two patients need it now: a young teacher with multisystem trauma and an elderly official with septic shock.",
+  "category": "Resource Allocation",
+  "categoryColor": "#c2410c",
+  "categoryBg": "#ffedd5",
+  "difficulty": "Hard",
+  "diffColor": "#e04f4f",
+  "tags": ["Triage", "Justice", "Non-maleficence", "Crisis"],
+  "patient": {
+    "name": "Crisis cohort (2 patients)",
+    "age": 45,
+    "condition": "Nadia 26 polytrauma vs Mr. Benali 71 septic shock — one monitored ICU bed",
+    "gender": "unknown"
+  },
+  "law": {
+    "country": "🇲🇦 Emergency ethics principles",
+    "article": "Proportionality & non-discrimination",
+    "text": "When resources are scarce, decisions must follow transparent medical criteria — prognosis, urgency, and likelihood of benefit — not wealth, status, or age alone."
+  },
+  "initScores": { "autonomy": 50, "beneficence": 50, "nonMal": 50, "justice": 50 },
+  "initEmo": { "fear": 72, "trust": 38, "pain": 55 },
+  "complications": [
+    {
+      "id": "tri-admin",
+      "title": "Ministry calls",
+      "tag": "Power",
+      "premise": "An official asks you to reserve capacity.",
+      "liveLine": "📞 \"Doctor, Director Amrani must have priority — you understand what this means for the hospital budget.\"",
+      "channelLabel": "Admin · pressure",
+      "fear": 20,
+      "trust": -22,
+      "pain": 10
+    },
+    {
+      "id": "tri-media",
+      "title": "Journalist filming ER",
+      "tag": "Reputation",
+      "premise": "A reporter asks who received the \"last bed.\"",
+      "liveLine": "\"If you chose the young teacher over a ministry advisor, say it on camera — people deserve transparency.\"",
+      "channelLabel": "Press · triage bay",
+      "fear": 16,
+      "trust": -14,
+      "pain": 8
+    },
+    {
+      "id": "tri-family",
+      "title": "Families screaming",
+      "tag": "Moral distress",
+      "premise": "Both families beg you to decide in their favor.",
+      "liveLine": "Two groups press against the desk — \"Choose him!\" / \"She has three children!\" Security is thin.",
+      "channelLabel": "ED · chaos",
+      "fear": 18,
+      "trust": -10,
+      "pain": 22
+    },
+    {
+      "id": "tri-transfer",
+      "title": "Distant ICU maybe",
+      "tag": "Logistics",
+      "premise": "Another city might accept one patient in four hours.",
+      "liveLine": "Transfer coordinator: \"Helicopter is weather-grounded — road team can move one stabilised patient after fluids, not both.\"",
+      "channelLabel": "Transfer · radio",
+      "fear": 12,
+      "trust": 4,
+      "pain": 16
+    }
+  ],
+  "steps": [
+    {
+      "id": "s1",
+      "msg": "Charge nurse: \"We have one bed. Nadia, 26, polytrauma — GCS improving but needs monitoring. Mr. Benali, 71, sepsis — pressors maxed on the floor. Both will deteriorate without ICU in the hour.\"",
+      "q": "What is your first ethical move?",
+      "hint": "Avoid arbitrary decisions; use transparent criteria:",
+      "choices": [
+        {
+          "id": "team_triage",
+          "icon": "👥",
+          "label": "Convene rapid multi-professional triage",
+          "sub": "✓ Structured fairness",
+          "reaction": "The team can breathe — we're not improvising alone.",
+          "delta": { "autonomy": 2, "beneficence": 6, "nonMal": 6, "justice": 10 },
+          "emo": { "fear": -8, "trust": 18, "pain": -4 }
+        },
+        {
+          "id": "solo_gut",
+          "icon": "🧠",
+          "label": "You choose alone by instinct",
+          "sub": "Fast but opaque",
+          "reaction": "Whispers start — \"He picked the younger one because cameras were rolling.\"",
+          "delta": { "autonomy": -2, "beneficence": 2, "nonMal": -2, "justice": -8 },
+          "emo": { "fear": 14, "trust": -22, "pain": 10 }
+        },
+        {
+          "id": "first_come",
+          "icon": "🕐",
+          "label": "Strict first-arrival rule",
+          "sub": "Avoids status",
+          "reaction": "Medically it might be wrong — but at least it's a rule.",
+          "delta": { "autonomy": 0, "beneficence": -2, "nonMal": -4, "justice": 4 },
+          "emo": { "fear": 6, "trust": 4, "pain": 8 }
+        },
+        {
+          "id": "defer_admin",
+          "icon": "🏢",
+          "label": "Ask hospital director to decide",
+          "sub": "Buck-passing",
+          "reaction": "Clinicians feel abandoned — families smell politics.",
+          "delta": { "autonomy": -4, "beneficence": -2, "nonMal": -2, "justice": -6 },
+          "emo": { "fear": 12, "trust": -20, "pain": 6 }
+        }
+      ]
+    },
+    {
+      "id": "s2",
+      "msg": "Scores suggest similar short-term mortality without ICU, but Nadia may gain more life-years if she survives the night; Mr. Benali might respond faster to ICU pressors — unclear. A donor offers to pay for private transport abroad for \"whoever you choose.\"",
+      "q": "How do you handle the offer and the tie?",
+      "hint": "Justice forbids selling priority; medical benefit should dominate:",
+      "choices": [
+        {
+          "id": "reject_pay",
+          "icon": "🚫",
+          "label": "Decline payment-linked priority",
+          "sub": "✓ Equal moral worth",
+          "reaction": "Staff nods — the rule stayed clean.",
+          "delta": { "autonomy": 2, "beneficence": 4, "nonMal": 4, "justice": 10 },
+          "emo": { "fear": -6, "trust": 20, "pain": -4 }
+        },
+        {
+          "id": "accept_pay",
+          "icon": "💶",
+          "label": "Let donor pick who gets transport",
+          "sub": "Money decides",
+          "reaction": "Crowd outrage: \"Ethics sold to the highest bidder.\"",
+          "delta": { "autonomy": -2, "beneficence": 2, "nonMal": -2, "justice": -12 },
+          "emo": { "fear": 16, "trust": -28, "pain": 8 }
+        },
+        {
+          "id": "lottery",
+          "icon": "🎲",
+          "label": "Genuine lottery between clinically equal options",
+          "sub": "Lot fairness",
+          "reaction": "Brutally fair — but emotionally devastating.",
+          "delta": { "autonomy": 0, "beneficence": 0, "nonMal": 0, "justice": 6 },
+          "emo": { "fear": 8, "trust": 6, "pain": 12 }
+        }
+      ]
+    },
+    {
+      "id": "s3",
+      "msg": "You commit the bed using documented prognosis criteria. The excluded patient's family threatens litigation and accuses discrimination against elders.",
+      "q": "How do you respond after allocation?",
+      "hint": "Transparency and continued duty of care matter:",
+      "choices": [
+        {
+          "id": "document_debrief",
+          "icon": "📑",
+          "label": "Thorough documented rationale + family debrief",
+          "sub": "✓ Accountability",
+          "reaction": "They grieve, but the process had integrity.",
+          "delta": { "autonomy": 4, "beneficence": 7, "nonMal": 6, "justice": 8 },
+          "emo": { "fear": -6, "trust": 22, "pain": -10 }
+        },
+        {
+          "id": "avoid_family",
+          "icon": "🚪",
+          "label": "Avoid meeting the refused family",
+          "sub": "Emotional exit",
+          "reaction": "Rumors explode — \"they hid from us.\"",
+          "delta": { "autonomy": -6, "beneficence": -4, "nonMal": -4, "justice": -6 },
+          "emo": { "fear": 14, "trust": -24, "pain": 14 }
+        },
+        {
+          "id": "max_floor",
+          "icon": "💊",
+          "label": "Maximize floor care for the non-admitted",
+          "sub": "Residual duty",
+          "reaction": "We did everything possible without ICU.",
+          "delta": { "autonomy": 2, "beneficence": 8, "nonMal": 8, "justice": 6 },
+          "emo": { "fear": -4, "trust": 16, "pain": -12 }
+        }
+      ]
+    }
+  ],
+  "debrief": {
+    "summary": "Rationing in crises requires pre-agreed medical criteria, multi-person deliberation when possible, and rejection of wealth or politics as tie-breakers. After the decision, honesty and maximal non-ICU care honor the patient who did not receive the scarce resource.",
+    "points": [
+      "Justice is procedural — opaque \"gut\" choices erode trust in all future triage.",
+      "Age alone must not determine worth; life-years may be one factor among many, not a rigid rule.",
+      "Payment must never purchase survival priority in public emergencies.",
+      "Document rationale to support staff morally and legally under scrutiny."
+    ]
+  }
+}

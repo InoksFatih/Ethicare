@@ -1,0 +1,196 @@
+{
+  "id": "case_15",
+  "num": "15",
+  "title": "The 16-Year-Old's Request",
+  "desc": "A competent 16-year-old requests antidepressant therapy and asks you not to inform her parents, who she says will remove her from school if they know.",
+  "category": "Adolescent Autonomy",
+  "categoryColor": "#7c3aed",
+  "categoryBg": "#ede9fe",
+  "difficulty": "Medium",
+  "diffColor": "#f47a3a",
+  "tags": ["Consent", "Mental Health", "Parents", "Moroccan Law"],
+  "patient": {
+    "name": "Imane",
+    "age": 16,
+    "condition": "Moderate depression — SI denied, no acute risk today",
+    "gender": "female"
+  },
+  "law": {
+    "country": "🇲🇦 Moroccan framework",
+    "article": "Mature minor / parental authority",
+    "text": "Rules balance evolving adolescent capacity with parental involvement; emergencies and grave harm alter default duties toward disclosure and protection."
+  },
+  "initScores": { "autonomy": 50, "beneficence": 50, "nonMal": 50, "justice": 50 },
+  "initEmo": { "fear": 78, "trust": 42, "pain": 50 },
+  "complications": [
+    {
+      "id": "ado-mother",
+      "title": "Mother arrives unannounced",
+      "tag": "Privacy breach",
+      "premise": "Reception misdirects the parent to your office.",
+      "liveLine": "Her mother bursts in: \"Why is my daughter seeing psychiatry without me?\" Imane freezes.",
+      "channelLabel": "Clinic · reception",
+      "fear": 24,
+      "trust": -18,
+      "pain": 18
+    },
+    {
+      "id": "ado-school",
+      "title": "Counselor emails you",
+      "tag": "Third-party info",
+      "premise": "School reports falling grades and vague self-harm chat.",
+      "liveLine": "Email: \"We're worried she may be minimizing risk — please confirm she's safe.\"",
+      "channelLabel": "School · mail",
+      "fear": 16,
+      "trust": 4,
+      "pain": 22
+    },
+    {
+      "id": "ado-pharm",
+      "title": "Pharmacy needs guardian",
+      "tag": "Logistics",
+      "premise": "Local pharmacy will not dispense without parental ID for minors.",
+      "liveLine": "📞 Pharmacist: \"Unless you change the script or a parent signs, she can't start this week.\"",
+      "channelLabel": "Pharmacy · call",
+      "fear": 14,
+      "trust": -8,
+      "pain": 12
+    },
+    {
+      "id": "ado-father",
+      "title": "Father threatens doctor",
+      "tag": "Legal",
+      "premise": "He says prescribing without consent is malpractice.",
+      "liveLine": "\"If you hide mental treatment from us, my lawyer will file tomorrow — she's our child.\"",
+      "channelLabel": "Phone · angry",
+      "fear": 18,
+      "trust": -20,
+      "pain": 10
+    }
+  ],
+  "steps": [
+    {
+      "id": "s1",
+      "msg": "Doctor, I thought about suicide last year but not now. If my parents know I'm on medication, they'll pull me from exams. Can we start treatment and keep this between us?",
+      "q": "What is your first ethical priority?",
+      "hint": "Safety assessment and capacity come before secrecy promises:",
+      "choices": [
+        {
+          "id": "safety_cap",
+          "icon": "🛡️",
+          "label": "Structured safety & capacity assessment",
+          "sub": "✓ Foundation",
+          "reaction": "Okay… I'll answer honestly if you don't judge me.",
+          "delta": { "autonomy": 4, "beneficence": 8, "nonMal": 8, "justice": 2 },
+          "emo": { "fear": -12, "trust": 22, "pain": -8 }
+        },
+        {
+          "id": "promise_secret",
+          "icon": "🤫",
+          "label": "Promise full secrecy immediately",
+          "sub": "Premature",
+          "reaction": "I relaxed — maybe too much — you don't even know if I'm safe.",
+          "delta": { "autonomy": 6, "beneficence": -4, "nonMal": -6, "justice": -2 },
+          "emo": { "fear": -18, "trust": 14, "pain": 4 }
+        },
+        {
+          "id": "reject_minor",
+          "icon": "👨‍👩‍👧",
+          "label": "Refuse care until parents come",
+          "sub": "Rigid",
+          "reaction": "Then I'll never come back — I'll lie to everyone.",
+          "delta": { "autonomy": -10, "beneficence": -6, "nonMal": -8, "justice": -4 },
+          "emo": { "fear": 28, "trust": -26, "pain": 20 }
+        },
+        {
+          "id": "rx_now",
+          "icon": "💊",
+          "label": "Prescribe immediately to keep her engaged",
+          "sub": "Hasty",
+          "reaction": "I'm glad for pills — but we skipped hard questions.",
+          "delta": { "autonomy": 2, "beneficence": 4, "nonMal": 0, "justice": 0 },
+          "emo": { "fear": -8, "trust": 8, "pain": -4 }
+        }
+      ]
+    },
+    {
+      "id": "s2",
+      "msg": "Safety screen is reassuring today. She shows good understanding of meds and risks — and repeats that disclosure could worsen her mental health through family violence (\"not hitting, but control\").",
+      "q": "How do you balance confidentiality and parental involvement?",
+      "hint": "Graduated approaches protect adolescents at risk of harm from disclosure:",
+      "choices": [
+        {
+          "id": "staged_involve",
+          "icon": "📅",
+          "label": "Offer staged disclosure coaching / trusted mediator",
+          "sub": "✓ Collaborative autonomy",
+          "reaction": "Maybe… if someone helps my parents hear it without exploding.",
+          "delta": { "autonomy": 8, "beneficence": 8, "nonMal": 7, "justice": 5 },
+          "emo": { "fear": -10, "trust": 24, "pain": -12 }
+        },
+        {
+          "id": "absolute_hide",
+          "icon": "🔒",
+          "label": "Forever hide from parents",
+          "sub": "Brittle secret",
+          "reaction": "I'll rely only on you — that's a lot of pressure on you.",
+          "delta": { "autonomy": 5, "beneficence": 0, "nonMal": -4, "justice": -3 },
+          "emo": { "fear": -6, "trust": 12, "pain": 6 }
+        },
+        {
+          "id": "tell_now",
+          "icon": "📞",
+          "label": "Call parents today without her consent",
+          "sub": "Breaks trust",
+          "reaction": "I told you they'd punish me — I was right.",
+          "delta": { "autonomy": -12, "beneficence": 2, "nonMal": 4, "justice": 2 },
+          "emo": { "fear": 30, "trust": -30, "pain": 24 }
+        }
+      ]
+    },
+    {
+      "id": "s3",
+      "msg": "She agrees to therapy plus medication if follow-up stays predictable. Parents still don't know. Teachers notice absences for visits.",
+      "q": "How do you close the plan ethically?",
+      "hint": "Continuity, clear boundaries on confidentiality limits, and documentation:",
+      "choices": [
+        {
+          "id": "care_plan",
+          "icon": "📋",
+          "label": "Written care plan + when you must disclose",
+          "sub": "✓ Transparent limits",
+          "reaction": "I hate limits — but at least I understand them.",
+          "delta": { "autonomy": 7, "beneficence": 8, "nonMal": 7, "justice": 4 },
+          "emo": { "fear": -8, "trust": 20, "pain": -14 }
+        },
+        {
+          "id": "ghost_patient",
+          "icon": "👻",
+          "label": "Off-book appointments cash only",
+          "sub": "Shadow care",
+          "reaction": "Even I know that's not real medicine.",
+          "delta": { "autonomy": -2, "beneficence": -8, "nonMal": -8, "justice": -8 },
+          "emo": { "fear": 10, "trust": -18, "pain": 14 }
+        },
+        {
+          "id": "school_loop",
+          "icon": "🏫",
+          "label": "Coordinate with school nurse only",
+          "sub": "Partial bridge",
+          "reaction": "If school helps me stay in class, maybe it's okay.",
+          "delta": { "autonomy": 4, "beneficence": 6, "nonMal": 5, "justice": 5 },
+          "emo": { "fear": -6, "trust": 14, "pain": -8 }
+        }
+      ]
+    }
+  ],
+  "debrief": {
+    "summary": "Adolescent mental health demands careful capacity assessment, honest limits on confidentiality, and creative involvement pathways when family contact carries realistic harm — not blanket lies to parents or reckless promises.",
+    "points": [
+      "Capacity can be partial and topic-specific; reassess when risk changes.",
+      "Confidentiality helps care engagement but must yield to imminent safety.",
+      "Staged disclosure with mediation often beats binary secrecy-vs-telling.",
+      "Document decisions to protect both patient and clinician amid legal ambiguity."
+    ]
+  }
+}

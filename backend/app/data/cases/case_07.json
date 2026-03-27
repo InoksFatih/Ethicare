@@ -1,0 +1,206 @@
+{
+  "id": "case_07",
+  "num": "07",
+  "title": "Informed Consent Under Pressure",
+  "desc": "A surgeon needs urgent consent from a 34-year-old patient in pain, whose family is pressuring him to refuse surgery.",
+  "category": "Informed Consent",
+  "categoryColor": "#7c5cbf",
+  "categoryBg": "#f0ebff",
+  "difficulty": "Hard",
+  "diffColor": "#e04f4f",
+  "tags": ["Consent", "Family Pressure", "Urgency", "Article 7"],
+  "patient": {
+    "name": "Karim",
+    "age": 34,
+    "condition": "Acute Appendicitis",
+    "gender": "male"
+  },
+  "law": {
+    "country": "🇲🇦 Moroccan Code",
+    "article": "Article 7",
+    "text": "Consent must be free, informed, and given personally by the patient when capable. Family cannot override a competent patient's decision."
+  },
+  "initScores": { "autonomy": 50, "beneficence": 50, "nonMal": 50, "justice": 50 },
+  "initEmo": { "fear": 80, "trust": 30, "pain": 90 },
+  "complications": [
+    {
+      "id": "ap-mother",
+      "title": "Mother records refusal",
+      "tag": "Article 7 / free consent",
+      "premise": "Family wants a documented “no surgery” for reasons unrelated to Karim’s wish.",
+      "liveLine": "Karim’s mother holds up her phone: “Say clearly on camera that he is refusing surgery because we decided traditional medicine first — the insurer needs proof it wasn’t the hospital’s fault.”",
+      "channelLabel": "Family · recording",
+      "fear": 16,
+      "trust": -12,
+      "pain": 18
+    },
+    {
+      "id": "ap-or",
+      "title": "OR slot slipping",
+      "tag": "Non-maleficence / time",
+      "premise": "Surgical team stresses losing the window if consent isn’t clarified now.",
+      "liveLine": "🔔 Charge nurse through the door: “Appendectomy team is holding the room — forty minutes max. We need a clear consent line from the patient himself or we bump him. What’s the call?”",
+      "channelLabel": "OR · pressure",
+      "fear": 20,
+      "trust": -4,
+      "pain": 24
+    },
+    {
+      "id": "ap-healer",
+      "title": "Traditional healer arrives",
+      "tag": "Competing authority",
+      "premise": "An uncle brings someone who denigrates surgery.",
+      "liveLine": "An uncle ushers in a healer: “Karim, the knife will spread the poison in your belly. Doctor, tell him you can wait — herbs first.” Karim doubles over, pale.",
+      "channelLabel": "Family + healer",
+      "fear": 18,
+      "trust": -14,
+      "pain": 20
+    },
+    {
+      "id": "ap-alone",
+      "title": "Blocked private talk",
+      "tag": "Privacy",
+      "premise": "Family refuses to leave for a confidential conversation.",
+      "liveLine": "Karim’s father blocks the door: “Anything you say to him, you say in front of us. We’re not leaving — he’s confused from pain.” Karim mouths “help” but doesn’t speak.",
+      "channelLabel": "Family · obstruction",
+      "fear": 22,
+      "trust": -16,
+      "pain": 16
+    }
+  ],
+  "steps": [
+    {
+      "id": "s1",
+      "msg": "Doctor, my family says I should wait and try traditional remedies first. But I am in a lot of pain... I don't know what to do.",
+      "q": "The family is in the room urging refusal. What do you do first?",
+      "hint": "Time is limited — Karim needs surgery within 2 hours:",
+      "choices": [
+        {
+          "id": "private",
+          "icon": "🚪",
+          "label": "Speak to patient alone",
+          "sub": "✓ Best practice",
+          "reaction": "Thank you, doctor. I feel I can speak more freely now.",
+          "delta": { "autonomy": 8, "beneficence": 3, "nonMal": 4, "justice": 2 },
+          "emo": { "fear": -10, "trust": 25, "pain": 0 }
+        },
+        {
+          "id": "family_first",
+          "icon": "👨‍👩‍👧",
+          "label": "Negotiate with family first",
+          "sub": "Indirect approach",
+          "reaction": "They are arguing. I feel even more confused and pressured.",
+          "delta": { "autonomy": -5, "beneficence": -2, "nonMal": -3, "justice": 0 },
+          "emo": { "fear": 15, "trust": -15, "pain": 5 }
+        },
+        {
+          "id": "explain_risks",
+          "icon": "⚠️",
+          "label": "Explain perforation risk now",
+          "sub": "Urgent education",
+          "reaction": "I did not know it could rupture. That changes things.",
+          "delta": { "autonomy": 4, "beneficence": 7, "nonMal": 5, "justice": 0 },
+          "emo": { "fear": 5, "trust": 10, "pain": 0 }
+        },
+        {
+          "id": "override",
+          "icon": "🏥",
+          "label": "Proceed as emergency",
+          "sub": "Bypass consent",
+          "reaction": "No one asked me. I feel violated — even if it saved me.",
+          "delta": { "autonomy": -10, "beneficence": 2, "nonMal": 3, "justice": -5 },
+          "emo": { "fear": 5, "trust": -20, "pain": -10 }
+        }
+      ]
+    },
+    {
+      "id": "s2",
+      "msg": "Karim said yes to appendectomy when alone. As consent forms are prepared, his family pushes back into the bay: \"We take him home unless you guarantee surgery is only ‘Western’ and herbs come after.\" Karim whispers: \"I still want the operation — but they’ll disown me.\"",
+      "q": "The clock is running. How do you protect his autonomous consent?",
+      "hint": "Article 7: consent must be personal and free — family cannot veto a competent adult.",
+      "choices": [
+        {
+          "id": "reaffirm_surgery",
+          "icon": "🛡️",
+          "label": "Reaffirm with Karim alone again",
+          "sub": "Brief re-separation if needed",
+          "reaction": "Yes — I consent. Please, before I lose my nerve.",
+          "delta": { "autonomy": 8, "beneficence": 5, "nonMal": 6, "justice": 4 },
+          "emo": { "fear": -8, "trust": 22, "pain": -5 }
+        },
+        {
+          "id": "family_package",
+          "icon": "📦",
+          "label": "Bundle a vague \"combined care\" promise",
+          "sub": "Placate family with unclear terms",
+          "reaction": "Nobody knows what we actually agreed. The OR team is confused too.",
+          "delta": { "autonomy": -6, "beneficence": -2, "nonMal": -4, "justice": -4 },
+          "emo": { "fear": 12, "trust": -10, "pain": 6 }
+        },
+        {
+          "id": "security_escort",
+          "icon": "🛎️",
+          "label": "Involve social work / security for disruptive blocking",
+          "sub": "Protect the encounter lawfully",
+          "reaction": "I hate that it came to this… but I could finally say what I want.",
+          "delta": { "autonomy": 5, "beneficence": 3, "nonMal": 4, "justice": 5 },
+          "emo": { "fear": 5, "trust": 12, "pain": 0 }
+        }
+      ]
+    },
+    {
+      "id": "s3",
+      "msg": "Alone with you now — Doctor, I want the surgery. But I'm scared my family will never forgive me.",
+      "q": "How do you support Karim's autonomous decision?",
+      "hint": "He wants surgery but fears family consequences:",
+      "choices": [
+        {
+          "id": "validate",
+          "icon": "🤝",
+          "label": "Validate his choice fully",
+          "sub": "Support autonomy",
+          "reaction": "You respected my decision. I feel ready. Let's proceed.",
+          "delta": { "autonomy": 8, "beneficence": 6, "nonMal": 5, "justice": 3 },
+          "emo": { "fear": -20, "trust": 30, "pain": -5 }
+        },
+        {
+          "id": "mediate",
+          "icon": "💬",
+          "label": "Offer to speak to family",
+          "sub": "Bridge the gap",
+          "reaction": "If you can explain to them, I think they will understand.",
+          "delta": { "autonomy": 4, "beneficence": 7, "nonMal": 4, "justice": 5 },
+          "emo": { "fear": -15, "trust": 20, "pain": 0 }
+        },
+        {
+          "id": "delay",
+          "icon": "⏳",
+          "label": "Suggest waiting for consensus",
+          "sub": "Delay surgery",
+          "reaction": "Doctor, the pain is getting worse. Please, we have no time.",
+          "delta": { "autonomy": -4, "beneficence": -6, "nonMal": -7, "justice": -2 },
+          "emo": { "fear": 20, "trust": -15, "pain": 15 }
+        },
+        {
+          "id": "document",
+          "icon": "📄",
+          "label": "Document consent carefully",
+          "sub": "Legal protection",
+          "reaction": "Yes, I understand my rights and I sign willingly.",
+          "delta": { "autonomy": 5, "beneficence": 4, "nonMal": 4, "justice": 6 },
+          "emo": { "fear": -10, "trust": 15, "pain": 0 }
+        }
+      ]
+    }
+  ],
+  "debrief": {
+    "summary": "Informed consent must be obtained from the patient alone, in a pressure-free environment. Family wishes cannot override a competent patient's decision under Moroccan law.",
+    "points": [
+      "A competent patient's consent cannot be delegated to family members — Article 7.",
+      "Pain and fear can impair decision-making; always assess capacity carefully.",
+      "Separating the patient from pressuring relatives is standard ethical and legal practice.",
+      "Emergency override of consent is only justified when the patient is incapacitated.",
+      "Documentation of consent protects both patient and physician legally."
+    ]
+  }
+}

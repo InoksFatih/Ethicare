@@ -1,0 +1,394 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+/* EthiCare Color System */
+:root {
+  --ethicare-teal: #1B6B7D;
+  --ethicare-teal-light: #2A8A9E;
+  --ethicare-teal-dark: #145566;
+  --ethicare-orange: #F59E0B;
+  --ethicare-orange-dark: #D97706;
+  --ethicare-blue: #2A6DF5;
+  --ethicare-cream: #F5F9FA;
+  --ethicare-sand: #E8F0F2;
+  --ethicare-page-bg: #F5F7FA;
+  --ethicare-autonomy: #58D8C8;
+  --ethicare-beneficence: #5EE6A8;
+  --ethicare-nonmal: #F7A35C;
+  --ethicare-justice: #6B9FE8;
+  --ethicare-fear: #FF7B7B;
+  --ethicare-trust: #5EE6A8;
+  --ethicare-pain: #F7A35C;
+
+  --background: #F5F7FA;
+  --foreground: #1B3A4D;
+  --card: #FFFFFF;
+  --card-foreground: #1B3A4D;
+  --popover: #FFFFFF;
+  --popover-foreground: #1B3A4D;
+  --primary: #1B6B7D;
+  --primary-foreground: #FFFFFF;
+  --secondary: #F5F9FA;
+  --secondary-foreground: #1B3A4D;
+  --muted: #E8F0F2;
+  --muted-foreground: #5C7483;
+  --accent: #F59E0B;
+  --accent-foreground: #FFFFFF;
+  --destructive: #EF4444;
+  --destructive-foreground: #FFFFFF;
+  --border: rgba(27, 107, 125, 0.15);
+  --input: #E8F0F2;
+  --ring: #1B6B7D;
+  --chart-1: #58D8C8;
+  --chart-2: #5EE6A8;
+  --chart-3: #F59E0B;
+  --chart-4: #6B9FE8;
+  --chart-5: #9F7CFF;
+  --radius: 1rem;
+  --sidebar: #1B6B7D;
+  --sidebar-foreground: #FFFFFF;
+  --sidebar-primary: #F59E0B;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: rgba(255, 255, 255, 0.1);
+  --sidebar-accent-foreground: #FFFFFF;
+  --sidebar-border: rgba(255, 255, 255, 0.1);
+  --sidebar-ring: #F59E0B;
+}
+
+.dark {
+  --background: #F5F7FA;
+  --foreground: #1B3A4D;
+  --card: #FFFFFF;
+  --card-foreground: #1B3A4D;
+  --popover: #FFFFFF;
+  --popover-foreground: #1B3A4D;
+  --primary: #1B6B7D;
+  --primary-foreground: #FFFFFF;
+  --secondary: #F5F9FA;
+  --secondary-foreground: #1B3A4D;
+  --muted: #E8F0F2;
+  --muted-foreground: #5C7483;
+  --accent: #F59E0B;
+  --accent-foreground: #FFFFFF;
+  --destructive: #EF4444;
+  --destructive-foreground: #FFFFFF;
+  --border: rgba(27, 107, 125, 0.15);
+  --input: #E8F0F2;
+  --ring: #1B6B7D;
+  --chart-1: #58D8C8;
+  --chart-2: #5EE6A8;
+  --chart-3: #F59E0B;
+  --chart-4: #6B9FE8;
+  --chart-5: #9F7CFF;
+  --sidebar: #1B6B7D;
+  --sidebar-foreground: #FFFFFF;
+  --sidebar-primary: #F59E0B;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: rgba(255, 255, 255, 0.1);
+  --sidebar-accent-foreground: #FFFFFF;
+  --sidebar-border: rgba(255, 255, 255, 0.1);
+  --sidebar-ring: #F59E0B;
+}
+
+@theme inline {
+  --font-sans: var(--font-sora), 'Sora', system-ui, sans-serif;
+  --font-mono: 'Geist Mono', 'Geist Mono Fallback';
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* ─────────────────────────────────────────
+   BACKGROUND DECORATIONS
+   ───────────────────────────────────────── */
+
+@keyframes ethicare-splash-aurora {
+  0%, 100% {
+    background-position: 0% 40%, 100% 60%, 50% 100%;
+    opacity: 0.78;
+  }
+  33% {
+    background-position: 100% 25%, 0% 75%, 60% 50%;
+    opacity: 0.97;
+  }
+  66% {
+    background-position: 35% 80%, 65% 20%, 20% 40%;
+    opacity: 0.85;
+  }
+}
+
+/* Second pass on same layer — visible “living” background (no transform conflict with bg-position anim) */
+@keyframes ethicare-aurora-breathe {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.07);
+  }
+}
+
+@keyframes ethicare-splash-grid-drift {
+  0%   { transform: translateY(0); }
+  100% { transform: translateY(-24px); }
+}
+
+@keyframes ethicare-splash-ripple {
+  0% {
+    transform: translate(-50%, -50%) scale(0.65);
+    opacity: 0.55;
+  }
+  70% { opacity: 0.12; }
+  100% {
+    transform: translate(-50%, -50%) scale(1.35);
+    opacity: 0;
+  }
+}
+
+@keyframes ethicare-splash-particle {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.15;
+  }
+  25% { opacity: 0.55; }
+  50% {
+    transform: translate(var(--dx, 12px), var(--dy, -18px)) scale(1.2);
+    opacity: 0.35;
+  }
+}
+
+/* Subtle animated wash on home root (EthiCare `/`) */
+@keyframes ethicare-home-bg-pulse {
+  0%,
+  100% {
+    opacity: 0.68;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.95;
+    transform: scale(1.04);
+  }
+}
+
+/* Scale only — rings are centered with margin in JSX so `transform` isn’t blocked by inline styles */
+@keyframes ethicare-home-ring-drift {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.04);
+  }
+}
+
+.ethicare-home-root {
+  isolation: isolate;
+}
+
+.ethicare-home-root::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 78% 62% at 50% 36%, rgba(255, 255, 255, 0.1), transparent 64%),
+    radial-gradient(ellipse 90% 55% at 50% -5%, rgba(88, 216, 200, 0.32), transparent 52%),
+    radial-gradient(ellipse 50% 45% at 95% 85%, rgba(245, 158, 11, 0.19), transparent 50%),
+    radial-gradient(ellipse 55% 40% at 5% 75%, rgba(27, 107, 125, 0.36), transparent 48%);
+  animation: ethicare-home-bg-pulse 22s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ethicare-home-root::before {
+    animation: none;
+    opacity: 0.85;
+    transform: none;
+  }
+}
+
+.ethicare-splash-aurora {
+  position: absolute;
+  inset: -30%;
+  z-index: 1;
+  background:
+    radial-gradient(ellipse 60% 48% at 48% 38%, rgba(255, 255, 255, 0.06), transparent 58%),
+    radial-gradient(ellipse 55% 45% at 30% 25%, rgba(88, 216, 200, 0.36), transparent 55%),
+    radial-gradient(ellipse 50% 40% at 75% 65%, rgba(245, 158, 11, 0.19), transparent 50%),
+    radial-gradient(ellipse 70% 50% at 50% 100%, rgba(27, 107, 125, 0.42), transparent 45%);
+  background-size: 220% 220%;
+  animation:
+    ethicare-splash-aurora 16s ease-in-out infinite,
+    ethicare-aurora-breathe 20s ease-in-out infinite;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+.ethicare-splash-grid {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  opacity: 0.12;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.35) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.35) 1px, transparent 1px);
+  background-size: 48px 48px;
+  animation: ethicare-splash-grid-drift 20s linear infinite;
+  pointer-events: none;
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 45%, black 20%, transparent 70%);
+}
+
+.ethicare-splash-particle {
+  position: absolute;
+  z-index: 3;
+  width: 4px;
+  height: 4px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 0 10px rgba(88, 216, 200, 0.85);
+  animation: ethicare-splash-particle 4.5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.ethicare-splash-ripple-ring {
+  position: absolute;
+  z-index: 4;
+  left: 50%;
+  top: 42%;
+  aspect-ratio: 1;
+  border-radius: 9999px;
+  border: 1px solid rgba(88, 216, 200, 0.28);
+  transform: translate(-50%, -50%);
+  animation: ethicare-splash-ripple 3.4s ease-out infinite;
+  pointer-events: none;
+  box-shadow:
+    0 0 40px rgba(88, 216, 200, 0.1),
+    inset 0 0 30px rgba(88, 216, 200, 0.06);
+}
+
+/* ─────────────────────────────────────────
+   WELCOME SCREEN ANIMATIONS
+   ───────────────────────────────────────── */
+
+@keyframes ethicare-welcome-hero-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.82) translateY(40px);
+    filter: blur(14px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes ethicare-welcome-line-in {
+  0% {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes ethicare-welcome-cta-in {
+  0% {
+    opacity: 0;
+    transform: translateY(28px) scale(0.92);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ─────────────────────────────────────────
+   MAIN MENU ANIMATIONS
+   ───────────────────────────────────────── */
+
+@keyframes ethicare-main-reveal {
+  0% {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes ethicare-splash-menu-row {
+  0% {
+    opacity: 0;
+    transform: translateX(-40px) translateY(16px);
+    filter: blur(4px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) translateY(0);
+    filter: blur(0);
+  }
+}
+
+/* ─────────────────────────────────────────
+   REDUCED MOTION OVERRIDES
+   ───────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .ethicare-splash-aurora,
+  .ethicare-splash-grid,
+  .ethicare-splash-particle,
+  .ethicare-splash-ripple-ring {
+    animation: none !important;
+  }
+
+  .ethicare-splash-aurora {
+    opacity: 0.45;
+  }
+}

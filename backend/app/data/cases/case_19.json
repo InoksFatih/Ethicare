@@ -1,0 +1,196 @@
+{
+  "id": "case_19",
+  "num": "19",
+  "title": "The Viral Ward Clip",
+  "desc": "A patient filmed your team during rounds without consent and posted a clipped joke you made about 'hypochondriacs' to TikTok — your face and hospital badge are visible. Views hit 200k in a day.",
+  "category": "Professional Conduct",
+  "categoryColor": "#475569",
+  "categoryBg": "#f1f5f9",
+  "difficulty": "Medium",
+  "diffColor": "#f47a3a",
+  "tags": ["Social media", "Privacy", "Trust", "Reputation"],
+  "patient": {
+    "name": "Houda",
+    "age": 24,
+    "condition": "Anxiety-related admissions — medically cleared, filming from bed",
+    "gender": "female"
+  },
+  "law": {
+    "country": "🇲🇦 Déontologie / privacy",
+    "article": "Professional discretion & respect",
+    "text": "Physicians must maintain dignity of patients and profession; public disparagement—even joking—harms trust and may breach confidentiality norms depending on content and identifiability."
+  },
+  "initScores": { "autonomy": 50, "beneficence": 50, "nonMal": 50, "justice": 50 },
+  "initEmo": { "fear": 62, "trust": 40, "pain": 25 },
+  "complications": [
+    {
+      "id": "viral-pr",
+      "title": "PR crisis cell",
+      "tag": "Institution",
+      "premise": "Leadership wants a denial statement.",
+      "liveLine": "\"Say deepfake or 'out of context' — full apology admits liability.\"",
+      "channelLabel": "Admin · Zoom",
+      "fear": 18,
+      "trust": -22,
+      "pain": 10
+    },
+    {
+      "id": "viral-colleague",
+      "title": "Collegial coldness",
+      "tag": "Culture",
+      "premise": "Interns meme your clip in group chat.",
+      "liveLine": "Screenshot circulates — you see laughing emojis.",
+      "channelLabel": "Phone · leak",
+      "fear": 16,
+      "trust": -18,
+      "pain": 20
+    },
+    {
+      "id": "viral-patient_other",
+      "title": "Other patients recognize you",
+      "tag": "Ward trust",
+      "premise": "Next shift, families ask if you'll mock them too.",
+      "liveLine": "\"Doctor, will you joke about us online when we leave?\"",
+      "channelLabel": "Ward · rounds",
+      "fear": 20,
+      "trust": -20,
+      "pain": 18
+    },
+    {
+      "id": "viral-union",
+      "title": "Union message",
+      "tag": "Employment",
+      "premise": "Representative warns of suspension risk.",
+      "liveLine": "\"Cooperate with inquiry — don't post a clapback tonight.\"",
+      "channelLabel": "Text · union",
+      "fear": 14,
+      "trust": 8,
+      "pain": 8
+    }
+  ],
+  "steps": [
+    {
+      "id": "s1",
+      "msg": "Houda texts: \"It was just content. You shouldn't have said that near my phone if you didn't want fame.\"",
+      "q": "Your immediate ethical stance?",
+      "hint": "Own harm caused by unprofessional remark; separate from her non-consented filming:",
+      "choices": [
+        {
+          "id": "own_apology",
+          "icon": "🙏",
+          "label": "Private apology + request takedown discussion",
+          "sub": "✓ Accountability",
+          "reaction": "She removes clip after hospital mediators engage — tension remains.",
+          "delta": { "autonomy": 6, "beneficence": 6, "nonMal": 6, "justice": 5 },
+          "emo": { "fear": 10, "trust": 24, "pain": -8 }
+        },
+        {
+          "id": "deny_deepfake",
+          "icon": "🎭",
+          "label": "Publicly claim video is fake",
+          "sub": "Lie",
+          "reaction": "Metadata proves authenticity — career implodes.",
+          "delta": { "autonomy": -12, "beneficence": -8, "nonMal": -10, "justice": -12 },
+          "emo": { "fear": 28, "trust": -40, "pain": 22 }
+        },
+        {
+          "id": "attack_patient",
+          "icon": "⚔️",
+          "label": "Threaten lawsuit against patient",
+          "sub": "Escalation",
+          "reaction": "Streisand effect — views double; public sides with her.",
+          "delta": { "autonomy": -10, "beneficence": -6, "nonMal": -8, "justice": -8 },
+          "emo": { "fear": 22, "trust": -32, "pain": 18 }
+        },
+        {
+          "id": "ignore",
+          "icon": "🙈",
+          "label": "Ignore — \"it will blow over\"",
+          "sub": "Neglect",
+          "reaction": "Hospital brand suffers; trainees learn silence.",
+          "delta": { "autonomy": -4, "beneficence": -4, "nonMal": -4, "justice": -6 },
+          "emo": { "fear": 14, "trust": -18, "pain": 12 }
+        }
+      ]
+    },
+    {
+      "id": "s2",
+      "msg": "Hospital quality wants a root-cause analysis: filming policies, badge visibility on wards, and your language during bedside teaching.",
+      "q": "How do you contribute to institutional learning?",
+      "hint": "Honest RCA beats defensive minimization:",
+      "choices": [
+        {
+          "id": "honest_rca",
+          "icon": "📊",
+          "label": "Full participation + communication skills plan",
+          "sub": "✓ Professional growth",
+          "reaction": "Peers see humility — new filming signage rolls out.",
+          "delta": { "autonomy": 4, "beneficence": 8, "nonMal": 8, "justice": 8 },
+          "emo": { "fear": -6, "trust": 28, "pain": -12 }
+        },
+        {
+          "id": "blame_patient_rca",
+          "icon": "👆",
+          "label": "Frame RCA as 'patient misconduct only'",
+          "sub": "Deflection",
+          "reaction": "Committee notes lack of clinician insight — sanction grows.",
+          "delta": { "autonomy": -8, "beneficence": -4, "nonMal": -6, "justice": -6 },
+          "emo": { "fear": 18, "trust": -26, "pain": 14 }
+        },
+        {
+          "id": "refuse_rca",
+          "icon": "🚫",
+          "label": "Lawyer advises silence to RCA",
+          "sub": "Stalled improvement",
+          "reaction": "System repeats near-miss with another attending.",
+          "delta": { "autonomy": -6, "beneficence": -6, "nonMal": -6, "justice": -8 },
+          "emo": { "fear": 12, "trust": -16, "pain": 10 }
+        }
+      ]
+    },
+    {
+      "id": "s3",
+      "msg": "Six months later, a medical student asks how to document smartphone norms in consent conversations at admission.",
+      "q": "What teaching legacy do you leave?",
+      "hint": "Normalize respectful humor boundaries and privacy scripts:",
+      "choices": [
+        {
+          "id": "teach_script",
+          "icon": "📚",
+          "label": "Co-author ward script + teach respectful rounding",
+          "sub": "✓ Structural fix",
+          "reaction": "Students carry language that protects patients and careers.",
+          "delta": { "autonomy": 8, "beneficence": 9, "nonMal": 9, "justice": 9 },
+          "emo": { "fear": -10, "trust": 30, "pain": -16 }
+        },
+        {
+          "id": "cynical_warn",
+          "icon": "😒",
+          "label": "Warn: \"never say anything true near a phone\"",
+          "sub": "Cynicism",
+          "reaction": "Humor becomes sneering secrecy — culture worsens.",
+          "delta": { "autonomy": -6, "beneficence": -6, "nonMal": -4, "justice": -4 },
+          "emo": { "fear": 8, "trust": -12, "pain": 10 }
+        },
+        {
+          "id": "no_filming_ban",
+          "icon": "📵",
+          "label": "Advocate filming ban without consent education",
+          "sub": "Incomplete",
+          "reaction": "Rules exist — but empathy doesn't grow.",
+          "delta": { "autonomy": 2, "beneficence": 4, "nonMal": 5, "justice": 3 },
+          "emo": { "fear": -4, "trust": 10, "pain": -6 }
+        }
+      ]
+    }
+  ],
+  "debrief": {
+    "summary": "Casual contempt for patients destroys trust faster than any algorithm. Filming without consent is its own wrong, but clinicians must still model respectful speech—especially near open microphones—and participate honestly in institutional learning afterward.",
+    "points": [
+      "Assume recording is always possible; bedside teaching is public-facing ethics.",
+      "Apology and remediation outperform denial when the clip is real.",
+      "Policy plus culture: filming rules and empathy training belong together.",
+      "A single viral moment can teach thousands—make the lesson integrity, not defensiveness."
+    ]
+  }
+}

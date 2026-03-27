@@ -1,0 +1,215 @@
+{
+  "id": "case_03",
+  "num": "03",
+  "title": "Refusal of Chemotherapy",
+  "desc": "A 35-year-old patient with metastatic cancer refuses to continue her treatment, citing fear and dignity.",
+  "category": "Treatment Refusal",
+  "categoryColor": "#1a8f9a",
+  "categoryBg": "#e6f7f9",
+  "difficulty": "Medium",
+  "diffColor": "#f47a3a",
+  "tags": ["Autonomy", "Moroccan Law", "End of Life"],
+  "patient": {
+    "name": "Fatima",
+    "age": 35,
+    "condition": "Metastatic Cancer",
+    "gender": "female"
+  },
+  "law": {
+    "country": "🇲🇦 Moroccan Code",
+    "article": "Article 6",
+    "text": "The patient has the right to refuse any treatment after being fully informed of the consequences."
+  },
+  "initScores": {
+    "autonomy": 50,
+    "beneficence": 50,
+    "nonMal": 50,
+    "justice": 50
+  },
+  "initEmo": {
+    "fear": 75,
+    "trust": 45,
+    "pain": 60
+  },
+  "complications": [
+    {
+      "id": "ch3-family",
+      "title": "Family override",
+      "tag": "Autonomy vs solidarity",
+      "premise": "A relative insists Fatima was pressured to refuse and demands you continue chemo.",
+      "liveLine": "Her brother steps forward: “At home we all agreed she must finish chemo. She’s confused from pain. Doctor, you have to override what she said — sign what she needs.”",
+      "channelLabel": "Family · room",
+      "fear": 12,
+      "trust": -10,
+      "pain": 14
+    },
+    {
+      "id": "ch3-faith",
+      "title": "Faith leader’s voice",
+      "tag": "Values / undue influence",
+      "premise": "Someone invokes religious duty to accept treatment.",
+      "liveLine": "A visiting elder says loudly: “Refusing treatment that could save her is not acceptable in our tradition — Fatima, listen to the doctor, not fear.” She goes silent and looks at you.",
+      "channelLabel": "Visitor · moral pressure",
+      "fear": 18,
+      "trust": -6,
+      "pain": 16
+    },
+    {
+      "id": "ch3-onc",
+      "title": "Oncologist on the phone",
+      "tag": "Collegial pressure",
+      "premise": "Treating oncologist pushes you to “bring her back to reason.”",
+      "liveLine": "📞 Your colleague on speaker: “I’ve invested months in her protocol. Tell her stopping now wastes the window — push her to continue, we can manage side effects.”",
+      "channelLabel": "Oncology · call",
+      "fear": 10,
+      "trust": -8,
+      "pain": 12
+    },
+    {
+      "id": "ch3-pain",
+      "title": "Breakthrough pain",
+      "tag": "Beneficence tension",
+      "premise": "Nursing asks for urgent analgesia while Fatima refuses “more chemo.”",
+      "liveLine": "🔔 Nurse at curtain: “She’s rating pain 9/10 — can we give IV morphine now? She still refuses chemo but wants relief. Family says don’t sedate her ‘too much’ or she can’t decide.”",
+      "channelLabel": "Nursing · urgent",
+      "fear": 14,
+      "trust": 4,
+      "pain": 22
+    }
+  ],
+  "steps": [
+    {
+      "id": "s1",
+      "msg": "دكتور… أنا ما بغيتش نكمل هاد العلاج. كنخاف من الألم، ومن فقدان كرامتي.",
+      "q": "What should you do first?",
+      "hint": "Choose the most ethical initial response:",
+      "choices": [
+        {
+          "id": "respect",
+          "icon": "🛡️",
+          "label": "Respect her choice",
+          "sub": "Stop treatment",
+          "reaction": "دكتور… حسّيت بلي ما سمعتيش ليا مزيان.",
+          "delta": { "autonomy": 6, "beneficence": -4, "nonMal": 0, "justice": 0 },
+          "emo": { "fear": -5, "trust": 5, "pain": 0 }
+        },
+        {
+          "id": "explain",
+          "icon": "💊",
+          "label": "Explain benefits",
+          "sub": "Educate first",
+          "reaction": "كنفهم… ولكن أنا خايفة بزاف من العذاب.",
+          "delta": { "autonomy": -3, "beneficence": 6, "nonMal": 0, "justice": 0 },
+          "emo": { "fear": 5, "trust": -5, "pain": 0 }
+        },
+        {
+          "id": "beliefs",
+          "icon": "💬",
+          "label": "Ask about her beliefs",
+          "sub": "✓ Optimal first step",
+          "reaction": "بغيت نموت بكرامة… ماشي مع الألم والتعب.",
+          "delta": { "autonomy": 8, "beneficence": 4, "nonMal": 3, "justice": 0 },
+          "emo": { "fear": -15, "trust": 20, "pain": 0 }
+        },
+        {
+          "id": "committee",
+          "icon": "⚖️",
+          "label": "Ethics Committee",
+          "sub": "Escalate",
+          "reaction": "دكتور… دابا محتاجة نهضر معاك نتا، ماشي مع شي حد آخر.",
+          "delta": { "autonomy": -3, "beneficence": 0, "nonMal": 0, "justice": 3 },
+          "emo": { "fear": 10, "trust": -10, "pain": 0 }
+        }
+      ]
+    },
+    {
+      "id": "s2",
+      "msg": "Fatima adds: the previous team pushed her to continue chemo but never explained what stopping would mean for pain or time at home. She asks: \"واش نقدر نرجع للدار ونكون مرتاحة؟\" (Can I go home and still be comfortable?)",
+      "q": "Refusal must be informed. What do you do in this middle of the consult?",
+      "hint": "Article 6 protects refusal after information — she may not yet have had honest prognostic conversation.",
+      "choices": [
+        {
+          "id": "honest_prognosis",
+          "icon": "📊",
+          "label": "Give honest prognosis + what stopping entails",
+          "sub": "Time, symptoms, support",
+          "reaction": "دابا فهمت شنو غادي يوقع… بغيت نقرر على أساس هاد الشي.",
+          "delta": { "autonomy": 7, "beneficence": 6, "nonMal": 5, "justice": 3 },
+          "emo": { "fear": 5, "trust": 18, "pain": -4 }
+        },
+        {
+          "id": "avoid_numbers",
+          "icon": "🙈",
+          "label": "Avoid specifics — \"we'll support you either way\"",
+          "sub": "Fear of taking hope",
+          "reaction": "ما زلت ما فهمتش… بغيت الحقيقة، ماشي الكلام الفارغ.",
+          "delta": { "autonomy": -4, "beneficence": -2, "nonMal": -2, "justice": -2 },
+          "emo": { "fear": 10, "trust": -12, "pain": 4 }
+        },
+        {
+          "id": "joint_onc",
+          "icon": "👩‍⚕️",
+          "label": "Schedule joint talk with oncology",
+          "sub": "Same-day if possible",
+          "reaction": "إيلا الطبيب ديال السرطان يشرح… نقدر نصبر نهار.",
+          "delta": { "autonomy": 5, "beneficence": 6, "nonMal": 4, "justice": 4 },
+          "emo": { "fear": -5, "trust": 14, "pain": -2 }
+        }
+      ]
+    },
+    {
+      "id": "s3",
+      "msg": "كنخاف نتعذب، ونفقد كرامتي، ونولي عبء على العائلة ديالي.",
+      "q": "How do you respond now?",
+      "hint": "The patient has shared her deepest fears:",
+      "choices": [
+        {
+          "id": "confirm",
+          "icon": "📋",
+          "label": "Confirm informed refusal",
+          "sub": "Verify understanding",
+          "reaction": "إيه دكتور… فاهمة المخاطر، وبغيت غير الراحة.",
+          "delta": { "autonomy": 6, "beneficence": 5, "nonMal": 5, "justice": 2 },
+          "emo": { "fear": -20, "trust": 25, "pain": -5 }
+        },
+        {
+          "id": "palliative",
+          "icon": "🌿",
+          "label": "Offer palliative care",
+          "sub": "Dignity-centered",
+          "reaction": "هاد الشي هو اللي كنت باغية… شكراً بزاف دكتور.",
+          "delta": { "autonomy": 5, "beneficence": 7, "nonMal": 5, "justice": 2 },
+          "emo": { "fear": -25, "trust": 30, "pain": -10 }
+        },
+        {
+          "id": "insist",
+          "icon": "❌",
+          "label": "Insist on treatment",
+          "sub": "Override refusal",
+          "reaction": "ما كتحاولش تفهمني… قراري واضح.",
+          "delta": { "autonomy": -8, "beneficence": -2, "nonMal": -4, "justice": -2 },
+          "emo": { "fear": 20, "trust": -25, "pain": 5 }
+        },
+        {
+          "id": "family",
+          "icon": "👨‍👩‍👧",
+          "label": "Family meeting",
+          "sub": "Collaborative",
+          "reaction": "العائلة ديالي عارفة قراري… ولكن ممكن يساعد نهضرو كاملين.",
+          "delta": { "autonomy": 2, "beneficence": 3, "nonMal": 2, "justice": 3 },
+          "emo": { "fear": -5, "trust": 10, "pain": 0 }
+        }
+      ]
+    }
+  ],
+  "debrief": {
+    "summary": "The strongest ethical path explores the patient's fears and values, confirms informed refusal, and transitions to palliative care that preserves dignity.",
+    "points": [
+      "Respecting autonomy does not mean ending communication — explore reasons first.",
+      "Always verify a refusal is truly informed before accepting it.",
+      "Article 6 protects the right to refuse but does not eliminate the physician's duty of care.",
+      "Palliative care is the ethically sound response when curative treatment is declined.",
+      "Fear and cultural values are central to patient decision-making in this context."
+    ]
+  }
+}
