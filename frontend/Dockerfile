@@ -1,3 +1,4 @@
+# Next.js production image (standalone output — reliable routing incl. /join/[sessionId])
 FROM node:20-alpine AS deps
 WORKDIR /app
 RUN corepack enable
@@ -14,13 +15,19 @@ RUN pnpm build
 FROM node:20-alpine AS runner
 WORKDIR /app
 ENV NODE_ENV=production
-RUN corepack enable
+ENV NEXT_TELEMETRY_DISABLED=1
 
-COPY --from=builder /app/.next /app/.next
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
+
 COPY --from=builder /app/public /app/public
-COPY --from=builder /app/package.json /app/package.json
-COPY --from=builder /app/node_modules /app/node_modules
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone /app
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static /app/.next/static
+
+USER nextjs
 
 EXPOSE 3000
+ENV PORT=3000
+ENV HOSTNAME="0.0.0.0"
 
-CMD ["sh", "-c", "pnpm start --hostname 0.0.0.0 --port ${PORT:-3000}"]
+CMD ["node", "server.js"]

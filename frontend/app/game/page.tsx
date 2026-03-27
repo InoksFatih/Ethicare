@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect, useMemo, useRef, useState } from "react"
+import React, { Suspense, useEffect, useMemo, useRef, useState } from "react"
 import Link from "next/link"
 import { useRouter, useSearchParams } from "next/navigation"
 import {
@@ -430,7 +430,7 @@ function CaseDebriefModal({
   )
 }
 
-export default function EthiCarePage() {
+function EthiCarePageInner() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const caseId = searchParams.get("case")
@@ -1298,5 +1298,19 @@ export default function EthiCarePage() {
       />
     ) : null}
     </>
+  )
+}
+
+export default function EthiCarePage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex items-center justify-center bg-[#f8fafc] text-[#64748B] text-sm font-medium">
+          Loading…
+        </div>
+      }
+    >
+      <EthiCarePageInner />
+    </Suspense>
   )
 }
