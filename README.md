@@ -141,6 +141,61 @@ Without the key, the engine uses high-quality static fallback responses for ever
 
 ---
 
+## Ownership and License
+
+This project is proprietary software.
+
+- Copyright owner: **Mohammed El Fatih Douhamd**
+- License: see `LICENSE` (All Rights Reserved)
+- No one may copy, redistribute, modify, or reuse this code without prior written permission.
+
+---
+
+## Security: API Keys and Secret Safety
+
+Never commit secrets to git. Keep real keys only in local env files or hosting platform secrets.
+
+### Local files
+
+- `backend/.env` contains real local secrets and is ignored by git.
+- `backend/env.example` must contain placeholders only (never real keys).
+
+### Key rotation (if a key was exposed)
+
+If a key appears in git history, screenshots, logs, or chat, rotate immediately:
+
+1. Create a new key in the provider dashboard.
+2. Update `backend/.env` with the new key.
+3. Revoke/delete the old key.
+
+Do this for both `OPENAI_API_KEY` and `ANTHROPIC_API_KEY` when relevant.
+
+### If GitHub blocks push with secret scanning (GH013)
+
+1. Remove secret files from tracking (`backend/.env` must be ignored).
+2. Rewrite commits that contained the secret.
+3. Re-commit clean history.
+4. Push again.
+5. Rotate leaked keys even after cleanup.
+
+---
+
+## Production URL Variables (for public QR links)
+
+Set these in your deployed frontend service:
+
+- `NEXT_PUBLIC_API_URL=https://<your-backend-domain>`
+- `NEXT_PUBLIC_WS_URL=wss://<your-backend-domain>`
+- `NEXT_PUBLIC_PUBLIC_JOIN_BASE_URL=https://<your-frontend-domain>`
+
+Set this in backend:
+
+- `CORS_ORIGINS=https://<your-frontend-domain>`
+
+With these values, QR codes point to a public join URL usable by anyone.
+
+---
+
 ## Tech Stack
 
 - **Frontend**: React 18, Vite, Axios, plain CSS-in-JS (no Tailwind dependency needed)
