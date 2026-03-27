@@ -6,26 +6,57 @@ A scenario-based training tool for healthcare students. Play as a doctor, naviga
 
 ## Project Structure
 
-```
+```text
 ethicare/
-├─ backend/              FastAPI — scoring engine, case data, AI feedback
+├─ backend/                                FastAPI API + live classroom/session backend
 │  ├─ app/
-│  │  ├─ main.py         App entry point + CORS
-│  │  ├─ routes/cases.py REST endpoints
-│  │  ├─ services/engine.py  Scoring logic + Anthropic API
-│  │  ├─ models/schemas.py   Pydantic request/response models
-│  │  └─ data/cases/     JSON case files (one per scenario)
-│  └─ requirements.txt
+│  │  ├─ main.py                           App entrypoint + CORS + health
+│  │  ├─ models/
+│  │  │  └─ schemas.py                     Pydantic request/response models
+│  │  ├─ routes/
+│  │  │  ├─ cases.py                       Case gameplay endpoints
+│  │  │  ├─ classroom.py                   Instructor/student websocket + stats routes
+│  │  │  └─ live_mode.py                   Live-mode scenario generation/session routes
+│  │  ├─ services/
+│  │  │  ├─ engine.py                      Core case engine + AI feedback integration
+│  │  │  ├─ clustering.py                  Free-text evaluation + clustering/statistics
+│  │  │  ├─ live_scenarios_openai.py       Scenario generation helper
+│  │  │  └─ session_manager.py             In-memory classroom session lifecycle
+│  │  └─ data/cases/                       Case JSON files
+│  │     ├─ case_03.json
+│  │     ├─ case_07.json
+│  │     ├─ case_12.json
+│  │     ├─ case_cert.json
+│  │     └─ case_research.json
+│  ├─ Dockerfile
+│  ├─ requirements.txt
+│  └─ env.example
 │
-├─ frontend/             React + Vite + plain CSS-in-JS
-│  ├─ src/
-│  │  ├─ components/     Sidebar, ChatPanel, DecisionCards, EthicsPanel, LawPanel, DrEthicsPanel
-│  │  ├─ pages/          CasePlayer.jsx (main simulator)
-│  │  ├─ data/           api.js (axios), cases.js (embedded fallback)
-│  │  ├─ App.jsx         Case selection screen
-│  │  └─ main.jsx        React entry point
+├─ frontend/                               Next.js 16 app router UI
+│  ├─ app/
+│  │  ├─ page.tsx                          Home
+│  │  ├─ cases/page.tsx                    Case list
+│  │  ├─ game/page.tsx                     Main game mode
+│  │  ├─ detective/page.tsx                Detective mode
+│  │  ├─ classroom/page.tsx                Classroom landing
+│  │  ├─ classroom/[sessionId]/page.tsx    Instructor classroom session view
+│  │  ├─ join/[sessionId]/page.tsx         Student join page (QR target)
+│  │  ├─ live-mode/page.tsx                Live-mode setup/generation
+│  │  ├─ live-session/[sessionId]/page.tsx Live instructor control room
+│  │  ├─ settings/page.tsx                 App settings
+│  │  └─ media/[file]/route.ts             Media file route
+│  ├─ components/
+│  │  ├─ ethicare/                         Domain UI components
+│  │  └─ theme-provider.tsx
+│  ├─ hooks/
+│  │  └─ useClassroomSocket.ts             Shared classroom websocket client
+│  ├─ lib/                                 Utility and analysis helpers
+│  ├─ media/ + public/media/               Video/image assets
+│  ├─ Dockerfile
 │  └─ package.json
 │
+├─ render.yaml                             Render blueprint for frontend/backend
+├─ LICENSE
 └─ README.md
 ```
 
@@ -38,6 +69,8 @@ ethicare/
 | 03 | Refusal of Chemotherapy | Autonomy, Beneficence | Article 6 |
 | 07 | Informed Consent Under Pressure | Autonomy, Justice | Article 7 |
 | 12 | End-of-Life Decision | All four | Article 4 & 9 |
+| 20 (`case_cert`) | Medical Certificate Request | Integrity, Non-maleficence, Justice | Article 28 |
+| 27 (`case_research`) | Fast Recruitment | Informed Consent, Vulnerable Groups, Justice | Helsinki Article 20 |
 
 ---
 
@@ -62,9 +95,9 @@ uvicorn app.main:app --reload
 
 ```bash
 cd frontend
-npm install
-npm run dev
-# → http://localhost:5173
+pnpm install
+pnpm dev
+# → http://localhost:3000
 ```
 
 > **No backend?** The frontend includes all case data as a local fallback. It works fully offline — AI feedback will use static responses instead of calling the API.
@@ -127,7 +160,7 @@ Each decision modifies the four principle scores (0–100):
 1. Create `backend/app/data/cases/case_XX_your_title.json`
 2. Follow the structure of any existing case file
 3. Restart the backend — it auto-discovers all JSON files in the `cases/` folder
-4. Add it to `frontend/src/data/cases.js` for offline fallback
+4. Optional: if you maintain curated case cards in the frontend UI, add metadata in `frontend/app/cases/page.tsx`
 
 ---
 
@@ -135,7 +168,10 @@ Each decision modifies the four principle scores (0–100):
 
 | Variable | Description | Required |
 |----------|-------------|----------|
+| `OPENAI_API_KEY` | Enables OpenAI scenario/evaluation features | Recommended |
+| `OPENAI_MODEL` | OpenAI model override (default set in backend config) | Optional |
 | `ANTHROPIC_API_KEY` | Enables live Dr. Ethics AI feedback | Optional |
+| `CORS_ORIGINS` | Comma-separated allowed frontend origins for backend CORS | Required in production |
 
 Without the key, the engine uses high-quality static fallback responses for every choice.
 
@@ -198,9 +234,9 @@ With these values, QR codes point to a public join URL usable by anyone.
 
 ## Tech Stack
 
-- **Frontend**: React 18, Vite, Axios, plain CSS-in-JS (no Tailwind dependency needed)
+- **Frontend**: Next.js 16 (App Router), React 19, TypeScript
 - **Backend**: FastAPI, Pydantic v2, httpx, uvicorn
-- **AI**: Anthropic Claude Sonnet (optional, with fallback)
+- **AI**: OpenAI (primary) with Anthropic + offline fallback paths
 - **Data**: JSON case files — no database required for the demo
 
 ---
